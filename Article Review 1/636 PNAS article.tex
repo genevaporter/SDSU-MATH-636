@@ -1,0 +1,149 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{setspace}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{indentfirst}
+\usepackage{anyfontsize}
+\usepackage{textcomp}
+\usepackage{float}
+\usepackage [english]{babel}
+\usepackage [autostyle, english = american]{csquotes}
+\MakeOuterQuote{"}
+
+\graphicspath{}
+
+
+
+\title{{\it PNAS} Article Review}
+\author{Geneva Porter}
+\date{27 September 2018}
+
+%\begin{figure}[H]
+%\centering{\includegraphics[width=10cm]{FILENAME.eps}}
+%	\caption*{CAPTION}
+%\end{figure}
+
+\begin{document}
+	
+\begin{titlepage}
+\maketitle
+\thispagestyle{empty}
+
+
+
+\centering
+\large \it San Diego State University
+
+Professor J. Mahaffy, Math 636
+\end{titlepage}
+
+ \section*{Introduction}
+ 
+ This review will examine the proceedings and modeling techniques in the article "Distinct kinetics of synaptic structural plasticity, memory formation, and memory decay in massed and spaced learning" published by PNAS in December of 2013. The article proposes that there are significant, physiologically measurable differences between male mice that experience massed versus spaced learning, and that these differences may shed insight into forming long-term memories more effectively. Along with a comprehensive written description of results, Wajeeha Aziz et al. includes several comparative histograms, scatter plots, best-fit models, and imaging samples to add clarity to their findings. We will proceed with a brief overview of the article, then analyze some of the modeling techniques and judge their effectiveness. Mentions of how these modeling techniques compare to ones used in the Math 636 class lectures will also be included.
+
+ 
+ \section*{Brief Overview}
+ 
+ To adequately describe and criticize the modeling techniques in this article, it is first necessary to interpret the vocabulary and methodology used. The main purpose of this article is to compare the effects of massed learning, which continually provides information to a subject over a specified time, to spaced learning, which provides the same information to a subject in 4 smaller sessions with breaks in between. The massed learning took place over 1 hour, and the breaks between the spaced learning sessions varied by subject from 10 minutes to 1 hour. The subject groups are denoted with $S_{10}$ for groups that had 10 minute breaks, $S_{20}$ for 20 minutes, etc.
+ 
+ During these learning (also called "training") sessions, Aziz et al. examined horizontal optokinetic respones (HOKR) after the mice were exposed to an oscillating image. During exposure, the eye movements of the mice were carefully measured, particularly the "retinal slips" that indicated the mice were stabilizing the moving image. The after-effects of such training saw that the mice continued to make such eye movements, a phenomenon called "HOKR adaptation." Mice that underwent no training were used as the control group.
+ 
+ The group took several measurements of brain tissue properties both before and after dissecting the mice. They noticed that mice with spaced training had a significantly lower PF-PC synapse density than their massed training counterparts when measured regularly over 30 days. These results are strongly correlated to memory retention in both this article as well as past studies that the group cited. They also recorded significantly higher HOKR gain with spaced training. Another interesting result from this study is the observation that memory acquisition and short-term retention was similar among all the groups, but long-term memory retention was significantly higher in mice with greater spaced learning.
+ 
+ \section*{Modeling Techniques and Observations}
+ 
+ Aziz et al. utilized standard modeling techniques to communicate their numerical results. The following gives a description of some selected models along with a discussion about their effectiveness. The figures are labeled by their place in the article, so referencing will be easier. As seen by the models below, a combination of scatter plots, best-fit lines, and histograms were used for much of the data in this article. Our classroom assignments utilize scatter plots and best-fit lines each week, and the ones displayed here are comparatively very basic in nature. There were no curve-fitting techniques used beyond basic linear regression, which we examined within 1 week of beginning the course. However, error margins are included in all the models, which we have not been utilizing in class assignments. Imaging samples are not shown here, as they do not pertain to mathematical modeling specifically. 
+ 
+ First, we will examine parts (E) and (F) of Figure 1. These use connected scatter plots to display HOKR gains measured just after training sessions (E) and on the second day (F) for spaced intervals of 10, 20, and 40 minutes. We can see that the initial HOKR gains for the training sessions are comparable, but become significantly greater for groups with longer spaced intervals, especially compared to the added measurement of $S_{60}$. Aziz et al. seemingly chose to include part (E) as a visual representation of how similar the measurements were among the groups. The large blocks and error margins make this a convoluted image to decipher, and are even less readable when printed without color. Keeping these results confined to text could have been appropriate. Part (F) is at least presented more clearly with labeled lines. Connecting the data points was also necessary to show the change in HOKR gain, as the points alone were convoluted on the left side.
+ 
+ \vspace{5mm}
+ 
+ 
+\begin{figure}[H]
+	\centering{\includegraphics[width=12cm]{fig1.png}}
+	\caption*\centering {\textbf{Figure 1}\\ Similar HOKR gain increase at the end of training\\ but distinct retention on day 2 by massed or spaced training.}
+\end{figure}
+
+\vspace{5mm}
+
+Figure 3 again utilizes the scatter plot technique, this time using frequency data to represent the distribution of PSD area and spine volume. Parts (B) and (C) have connected points, taking on a curved shape. Both these parts seem like good candidates for a curve-fitting model. Some form of an exponential function could be utilized here, to predict both the PSD area and spine volume after HOKR training sessions. It would be interesting if a model could predict the length of this type of memory retention just by taking measurements of the PSD area or spine volume.
+
+\pagebreak
+
+Part (D) also uses a scatter plot, but does not connect the data points. This graph is simply used to show that there exists a positive correlation between PSD area and spine volume. There are actually 2 best fit lines here, both with very similar slopes. The second line is visually indistinguishable from the first, and group distinction is unreadable in print without color. While this model does convey important information, simply stating the correlation is also adequate.
+
+\vspace{5mm}
+
+	\begin{figure}[H]
+	\centering{\includegraphics[width=14cm]{fig3.png}}
+	\caption*\centering {\textbf{Figure 3}\\ Simultaneous shrinkage of synapse and \\PC spine at the end of spaced training.}
+\end{figure}
+
+\vspace{5mm}
+
+Next, we will examine the even more simplistic parts of figure 4. Part (B) uses a histogram with error intervals to compare synapse density between the control group and the massed, $S_{40}$, and $S_{60}$ groups. It is unclear why Aziz et al. chose to use a histogram rather than a scatter plot or connected scatter plot for this data. Perhaps they wanted to show the changes in synapse density more dramatically. A scatter plot might have been a better choice, as it would have clarified the error bars in the Pf1 measurements.
+
+Looking at part (C), we see a scatter plot that is not crowded with data points. This graph measures the ratio of synapse density to HOKR retention, pointing out a negative correlation when measured against higher spaced training. They used a bet-fit line through the average of the massed, $S_{40}$, and $S_{60}$ groups (averages shown by a filled-in shape). 
+
+The last graph that we will examine shows an interesting mirroring effect between HOKOR gain and synapse density. Even though there are a few data points with significantly large error intervals, the relationship is still clear. Connecting the scatter plot data points helps highlight this correlation as well. The clear labeling of each line allows readability to transfer to colorless print. This graph is the strongest in the article, as it points out how much more effective spaced training is for memory retention (measured in HOKR gain) and the physiological correlation of retained memory to synapse density.
+
+\begin{figure}[H]
+	\centering{\includegraphics[width=12cm]{fig4.png}}
+	\caption*\centering {\textbf{Figure 4}\\ Strong negative correlation between reduction of PF–PC \\synapses in Fl and retention of HOKR gain on the second day. }
+\end{figure}
+
+	 \begin{figure}[H]
+ 	\centering{\includegraphics[width=10cm]{fig6.png}}
+ 	\caption*\centering {\textbf{Figure 6}\\ Tightly correlated reduction of PF–PC synapses \\to the long-lasting memory by massed or spaced training.}
+ \end{figure}
+
+ 
+
+ \section*{Conclusion}
+ 
+ Although many criticisms have been aimed at flaws in these models, their presence still vastly improves the communication of data when compared to the written word. Many individuals can decipher graphs far more easily than reading out numbers. In addition, referencing figures allows the reader to easily spot pertinent data when searching through an article such as this one. It is also interesting to note that even complex experiments and data collection can be easily represented using very basic modeling techniques.
+ 
+ Apart from commenting on the mathematical modeling used in this article, it would also be apt to note why this article was chosen. The investigation into effectively cultivating long-term memories is of particular interest to this graduate student. Although the formation of implicit optical motor response memories may differ from the formation of explicit event memories, there is nonetheless hope that the benefits of spaced learning in the former may translate to the latter. At present this student excels at several specific activities learned by repetitive motion, yet intentionally committing information to conscious memory is sometimes elusive. It is the goal of all graduate students to effectively retain information, and perhaps more studies will shed light on even better techniques to achieve this skill.
+
+ 
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

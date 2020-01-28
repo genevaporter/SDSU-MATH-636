@@ -1,0 +1,499 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{setspace}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{indentfirst}
+\usepackage{anyfontsize}
+\usepackage{textcomp}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{changepage}
+\usepackage [english]{babel}
+\usepackage [autostyle, english = american]{csquotes}
+\usepackage{tabto}
+\usepackage{verbatim}
+\usepackage{wrapfig}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{stackengine}
+\usepackage{scrextend}
+\usepackage{booktabs}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{nicefrac}
+\usepackage[numbers, comma, super, square]{natbib}
+
+
+
+
+\graphicspath{}
+\MakeOuterQuote{"}
+
+\title{Modeling Gene Expression in Lung Development}
+\author{Geneva Porter}
+\date{18 December 2018}
+
+\begin{comment}
+
+\begin{figure}[H]
+\centering{\includegraphics[width=10cm]{FILENAME.eps}}
+\caption*{\textbf{CAPTION}}
+\end{figure}
+
+\begin{table}[]
+\begin{center}
+\begin{tabular}{|l|l|} \hline
+&  \\ \hline
+&  \\ \hline
+\end{tabular}
+\caption*{\textbf{} }
+\end{center}
+\end{table}
+
+$\left(\begin{matrix}
+11      & 12  \\
+21      & 22  \\
+\end{matrix}\right)$
+
+\end{comment}
+
+\begin{document}
+	
+	\def\arraystretch{1.5}
+	
+	
+\begin{titlepage}
+\maketitle
+
+\thispagestyle{empty}
+
+
+\begin{center}
+	
+\large \it San Diego State University 
+	
+Professor J Mahaffy, Math 636
+
+\end{center}
+\end{titlepage}
+
+%\tableofcontents
+%\newpage
+
+
+\section{Introduction}
+
+	Many questions have been resolved about the biological mechanisms of the human body, yet with each answer comes more unknowns. This report examines what is already known about genetic expression in developing lungs, and it presents some problems in the field that have not been solved. Specifically, we investigate a theoretical model that predicts the type of branching structures formed based on a cycle of genetic expression in the murine developing lung. This will be accomplished though stability analysis and time series visualization of a simplified genetic feedback ODE system.
+
+	\subsection{Background}
+	
+		Before exploring the intricacies of genetic modeling, it is necessary to establish a general foundation of the biological mechanisms behind genetic expression. All of our genetic information is determined by our genotype and hard-coded into our DNA, present in  every native cell in our bodies. During fetal development, DNA provides the building schematics needed to create each component of the body. It is though these schematics that the correct genes are identified and expressed via protein synthesis. The expression of genes occurs in two general stages: transcription and translation. During transcription, the enzyme RNA polymerase attaches to a group of genes within a DNA strand and creates a template for RNA replication. This template is used to synthesize proteins via translation and form a gene product.\cite{Hartl1998} 
+		
+		 For this investigation, we are particularly interested in genetic regulation at the transcription stage. During the formation of branching structures in the lung, expression and repression signaling is largely mediated by peptide growth factors, which can stimulate or inhibit mitosis and regulate cellular differentiation.\cite{Rotwein1997}  We will be focusing on lung growth during the pseudoglandular stage of fetal lung development, when epithelial cells differentiate to form a tubular structure and elongate into the surrounding mesenchyme tissue. This structure forms 4 domains of interest: the inner cavity of lumen (domain 1), the epithelium sheath (domain 2), the mesenchyme (domain 3), and the outer cavity beyond the mesenchyme (domain 4). Branching morphogenesis relies on signaling pathways between receptors on the epithelial buds in domain 2 and peptide growth factors in the extra-cellular matrix of the mesenchyme in domain 3.\cite{Roth-Kleiner2003} Lateral branching, planar branching, and orthogonal branching have been observed in mammalian lung development, but the mechanism behind gene concentration patterning on the epithelial bud preceding branching outgrowth is still being investigated.\cite{Iber2013} 
+		 
+		 \pagebreak
+
+		 
+	\subsection{Modeling Branch Selection}
+		
+		The model presented here, developed by Menshykau \textit{et. al} in 2012,\cite{Menshykau2012} aims to describe the harmony among collaborative genetic expressions that result in the precise and complex structure of the lung. We will examine a theoretical model that describes the negative feedback loop among three key components of lung branching morphogenesis: Fibroblast Growth Factor 10 (FGF10), Sonic Hedgehog protein (SHH), and the SHH receptor Patched 1 (Ptc1). It is well known that these elements are crucial to lung development.\cite{Iber2013}\cite{Menshykau2012}\cite{Metzger1999}\cite{Minoo2000}
+		\cite{Nikolic2018}\cite{Roth-Kleiner2003}\cite{Schnatwinkel2013} Growth stimulation due to mechanical pressure has also been explored, however the nuances behind spacial and temporal gene expression on epithelial buds are still unknown. The difficulty in producing models of this type often lies in three general considerations: creating a system that accounts for pattern formation arising from noise, ensuring the pattern is stable, and controlling the different branching types that occur. Menshykau's model proposes a reaction-diffusion Turing mechanism that predicts branch point selection as a factor of growth rate. He proposes that faster growth rates associated with higher levels of FGF10 cause lateral branching, while slower growth rates produce bifurcation branching. Other current models propose distance-based patterning, diffusion limited growth, or diffusion-based geometry to explain how branch modes are selected.\cite{Iber2013} 
+				
+			
+	\subsection{Research Goals}
+	
+		This report is simply an introduction to a much larger and deeper investigation into the role of FGF10 signaling pathways in epithelial bud branching. The ultimate goal of this research is to propose a new theoretical pattern formation map of the FGF10-SHH feedback mechanism between the epithelial bud and the mesenchyme. Hopefully, such a model will shed light on how cell proliferation is regulated and which physical mechanisms contribute to lung branching in fetal development. Experimental verification of the model would of course be needed before accepting, or more likely rejecting, the proposed mechanism as valid.
+		
+		Current research aims to find ways to help regenerate damaged or underdeveloped lung tissue and increase the survival rate of lung transplant hosts, which is around 54\% over five years.\cite{Nikolic2018} While such studies aim to understand and aid human lung development, the research and models presented here are based on past laboratory observations using mice. Much less is known on {\it in vivo} lung development in humans. There is still much work to be done before human lung modeling can have wide-spread applications.	
+		
+		\pagebreak
+	
+\section{The Menshykau Model}
+
+		The basis of this report is the analysis of a simplified version of the following dimensionless system of partial differential equations:
+	
+			\begin{equation}\label{eq:OG-s}
+					\dot{S}=D_S\Delta S+\rho_s\dfrac{F^n}{F^n+1}-\delta_SS-\delta_CP^2S
+			\end{equation}
+			
+			\begin{equation}\label{eq:OG-p}
+					\dot{P}=D_P\Delta P+\rho_P-\delta_PP+(v-2\delta_C)P^2S
+			\end{equation}
+			
+			\begin{equation}\label{eq:OG-f}		
+					\dot{F}=D_F\Delta F+\rho_F\dfrac{1}{(P^2S)^n+1}-\delta_FF
+			\end{equation}
+		
+		This system provides an interesting biomathematical challenge of understanding of genetic regulation in lung development. The following sections will provide details concerning the creation of the system, descriptions for each term, and an interpretation of how the parameters relate to branching morphology.
+	
+	\subsection{Terms and Parameters}	
+		
+		To begin, let us examine the star components $S(t)$, $P(t)$, and $F(t)$, and their time derivatives $\dot{S}$, $\dot{P}$, and $\dot{F}$. These values represent the concentration of SHH, Ptc-1, and FGF10, respectively. The behavior of these equations differ based on which domain is under examination. Since SHH is expressed only in the epithelium, it will only have a production coefficient in that domain. Likewise, FGF10 is only produced in the mesenchyme, so production will only happen there. Ptc-1 is located on the membrane of epithelium cells facing the mesenchyme, so it is classified as a mesenchyme domain product. Movement between domains allows component decay to appear in various locations. Note that the parameters are positive and dimensionless, so their values can be regarded in relation to each other rather than in definitive terms.
+		
+		Each of these components have a diffusion coefficient, $D_k$, where $k$ represents a component. The parameter $\Delta$ signifies the Laplacian operator. The product of theses two parameters, $D_k\Delta,$ represent the diffusion fluxes of component $k$. Next, the $\rho_k$  parameters indicate maximal component production rates without the influence of repressors. The $\delta_k$ terms give the linear rate of decay for each component, and the specific term $\delta_C$ relates to the degradation of the complex formed by SHH and its receptor Ptc-1. The $n$ is simply our Hill coefficient, which is given a value of two, and $v$ is the first order rate constant, which relates to the formation of the SHH/Ptc-1 complex. The parameters associated with these components are summarized and valued in Table \ref{table:parameters} below. 
+	
+			\begin{table}[H]
+				\begin{center}
+					\begin{tabular}{|c|c|c|c|c|} \hline
+						Parameter						&  Description 				& Epithelium	& Mesenchyme	& Cavities\\ \hline
+						$D_S$, $D_P$, $D_F$				& Diffusion coefficients 	& 5, 1, 0.2	& 5, 1, 0.2	& 40, 0, 40	\\ \hline
+						$\rho_S$ 						& Maximum production rate 	& 1600		& --			& --			\\ \hline
+						$\rho_P$ 						& Maximum production rate 	& --			& 0.6 		& --			\\ \hline
+						$\rho_F$ 						& Maximum production rate 	& --			& 3.5		& --			\\ \hline
+						$\delta_S$						& Component decay rate 		& 0.2		& 0.2		& 0.2		\\ \hline
+						$\delta_P$						& Component decay rate	 	& --			& 1			& --			\\ \hline
+						$\delta_F$ 						& Component decay rate	 	& 5		 	& 5			& 5			\\ \hline
+						$\delta_C$ 						& SHH/Ptc-1 complex decay 	& 1.6 		& 1.6 		& --			\\ \hline
+						$v$ 							& First order rate constant & -- 		& 5			& --			\\ \hline
+					\end{tabular}
+					\caption{Menshykau Model Parameter Values}
+					\label{table:parameters}
+				\end{center}
+			\end{table}
+
+	\subsection{Expression Cycle}
+	
+		The three components of this model relate to each other via a negative feedback loop. In short, FGF10 in the mesenchyme stimulates the expression of SHH in the epithelium cells, which then binds to Ptc-1 on the cell surface to repress FGF10. Each equation has an element that dictates diffusion, production, or degradation, with $\dot{S}$ and $\dot{P}$ also including a complex formation element. 
+		
+		The diffusion term $D_k\Delta k$ dictates the manner in which SHH and FGF10 can diffuse outside the epithelium and mesenchyme, and inside the lumen. Although Ptc-1 is a membrane protein and cannot diffuse, it affects the diffusion of SHH. Thus, the term $D_P\Delta P$ is really the diffusion {\it facilitation} rate, rather than the diffusion rate of the component itself.
+		
+		Production rate terms are positive and preceded by $\rho_k$. The production rate in $\dot{P}$ is straightforward, as it does not depend on the values of either SHH or FGF10. The feedback loop between SHH and FGF10 is modeled using a Hill type function. Since FGF10 stimulates the production of SHH, the production rate for SHH increases with an increase of FGF10. Conversely, The increase of SHH reduces the production of FGF10. 
+		
+		\pagebreak
+		
+		The linear decay of each component is also straightforward, with just a negative coefficient dictating loss. For SHH and Ptc-1, however, complex formation and decay must be included. Since SHH can bind to at least 2 receptors, the generalized $P^2S$ value is used to represent the SHH/Ptc-1 complex. For $\dot{S}$, the formation of the complex represents a loss in SHH concentration. Conversely, Ptc-1 expression is enhanced once it is bound to SHH, so complex formation increases its concentration.
+				
+		These components work together, forming concentration patterns on the epithelial bud. Generally, branching occurs in areas where FGF10 is highly concentrated. These concentration regions may be formed because of increased levels of SHH surrounding the concentration areas, thinning of the epithelium below the concentration areas, or perhaps a depletion of SHH during the epithelium bud elongation phase. This is the heart of the research goal that this paper introduces. The theories on how these concentration patterns arise have yet to be verified experimentally.
+		
+	
+	\subsection{Simplification}
+	
+		The diffusion terms described in the model above rely on a partial differential equation analysis. That system was solved using the finite element method and the software COMSOL Multiphysics 4.1. Here, we will simplify the model to ordinary differential equations by removing the diffusion terms. This will allow us to perform basic stability and time series analysis using MATLAB. The simplified system is given by:
+	
+	
+			\begin{equation}\label{eq:s}
+			\dot{S}=\rho_s\dfrac{F^2}{F^2+1}-\delta_SS-\delta_CP^2S
+			\end{equation}
+			
+			\begin{equation}\label{eq:p}
+			\dot{P}=\rho_P-\delta_PP+(v-2\delta_C)P^2S
+			\end{equation}
+			
+			\begin{equation}\label{eq:f}		
+			\dot{F}=\rho_F\dfrac{1}{(P^2S)^2+1}-\delta_FF
+			\end{equation}
+			
+			\vspace{3mm}
+	
+		Without the diffusion terms, we can determine neither the physical genetic expression patterning in the epithelia and mesenchyme, nor the resulting branching mode. However, we can observe the theoretical levels of expression in each domain and determine how varying production or decay parameters effect genetic expression. Initial values of (0, 0, 0) are used where appropriate as suggested by Menshykau's report. Using these initial conditions to observe the behavior of the system may not be useful at times when an equilibrium is located at the origin. The results of this model represent the dynamics of one branching event.
+		
+		\pagebreak
+	
+\section{Stability Analysis}
+
+	The analysis for this system will follow the same general guidelines as the original model. Separate analyses are performed for epithelium, mesenchyme, and cavity domains. We will find the general form for the equilibrium, Jacobian matrix, and eigenvalues, then alter some parameters to determine the stability bifurcation value. It will be helpful to first establish a general Jacobian matrix applicable to all domains:
+	
+		\begin{equation}\label{eq:J}
+		J=
+		\left(\begin{matrix}
+		\vspace{3mm}
+		-\delta_S-\delta_CP^2 & -2\delta_CPS & \rho_S\dfrac{2F}{(F^2+1)^2}	\\
+				\vspace{3mm}		
+		(v-2\delta_C)P^2 & -\delta_PP+2(v-2\delta_C)PS	& 0	\\		
+		\rho_F\dfrac{-2(P^2S)^2S^{-1}}{[(P^2S)^2+1]^2} & \rho_F\dfrac{-4(P^2S)^2P^{-1}}{[(P^2S)^2+1]^2}	& -\delta_F	\\
+		\end{matrix}\right)
+		\end{equation}
+		\vspace{1mm}
+		
+	With the Jacobian matrix established, we can readily evaluate it at the necessary parameters and equilibria for each domain.
+
+	\subsection{Epithelium Domain}
+	
+		Within the epithelia, SHH is produced. The PDE model predicted the distribution of SHH within the epithelium bud. The ODE model will ascertain the total levels of SHH present in the domain. The absence of FGF10 and Ptc-1 production in this region simplifies the model, so the the parameters $\rho_P$, $\rho_F$, $\delta_P$, and $v$ are equal to zero. Without these values, the model has the form:
+		
+			\begin{equation}\label{eq:s1}
+			\dot{S}=\rho_s\dfrac{F^2}{F^2+1}-\delta_SS-\delta_CP^2S
+			\end{equation}
+			
+			\begin{equation}\label{eq:p1}
+			\dot{P}=-2\delta_CP^2S
+			\end{equation}
+			
+			\begin{equation}\label{eq:f1}		
+			\dot{F}=-\delta_FF
+			\end{equation}
+			\vspace{-1mm}
+
+		Setting each equation equal to zero, we obtain the solution (0, $P$, 0) as our only real equilibria. In this instance, there are an infinite number of equilibria, as $P$ could have any value. Plugging the equilibrium into the Jacobian matrix yields:
+		
+			\begin{equation}
+			\hspace{-5mm}J = 
+			\left.\left(\begin{matrix}
+			-\delta_S-\delta_CP^2 & -2PS\delta_C 	& \rho_S\dfrac{2F}{(F^2+1)^2}  \\
+			-2P^2\delta_C     & -4PS\delta_C    & 0  \\
+			0			&0			& -\delta_F	\\
+			\end{matrix}\right)\right|_{(0,P,0)}\longrightarrow
+			\left(\begin{matrix}
+			-\delta_S-\delta_CP^2      & 0 	& 0  \\
+			-2P^2\delta_C      & 0    &0   \\
+			0		&0		& 	-\delta_F\\
+			\end{matrix}\right)
+			\end{equation} 
+			\vspace{1mm}
+						
+		Since this evaluation of the Jacobian is already a triangular matrix, we can see  our eigenvalues on the diagonal at $-\delta_S-\delta_CP^2$, $-\delta_S$, and 0. Since we defined our parameters as positive, there are no possible parameter values that will result in positive eigenvalues, so a bifurcation analysis will not be done. An eigenvalue of zero warrants further investigation before determining stability status. One helpful tool for this analysis is creating a phase portrait. Since there are 3 equations, 3 phase portraits of two dimensions can illustrate the behavior between each component pair combination about the equilibria.
+		
+		Before plotting these phase portraits, it is necessary to choose the appropriate parameters and numerical approach. For simplicity, we will set $P=0$ as the second value of our equilibria. Default parameter values from table \ref{table:parameters} will be used. The MATLAB finction {\it ode23s()} will numerically approximate the system. Note, however, that $\dot{F}$ can be easily solved as it represents Malthusian decay, so $F(t)=e^{-\delta_Ft}$. The phase portraits are shown below.	
+		
+			\begin{figure}[H]
+				\centering{\includegraphics[width=15cm]{p1.png}}
+				\caption{Epithelium Domain Phase Portrait About Equilibrium $(0,0,0)$}
+				\label{figure:d1phase}
+			\end{figure}
+		
+		In figure \ref{figure:d1phase}, the equilibrium at the origin is marked with a red dot. Initial conditions $(0.1, 0.1, 0.1)$ were used as small perturbations from the equilibrium, shown by the blue dot. The numerical approximation represents a time span of 10 kiloseconds. In each case, values tend toward the origin. Notice that as soon as a trajectory hits the $P(t)$ axis, it ceases to continue, confirming that any value of $P$ is valid for this equilibria. Similar behavior occurs at starting points $(10,10,10)$ and $(100,100,100)$, indicating that this equilibrium is an attractor for all positive initial conditions. We can now state that the system is stable in the epithelium domain for any initial conditions and any positive parameters. 
+
+	\subsection{Mesenchyme Domain}
+	
+		In the mesenchyme, FGF10 and Ptc-1 are produced. FGF10 causes branching to occur, so higher levels in this domain are necessary for morphogenesis.  Most parameter values, except for $\rho_S$, influence this domain. Our system is now given as:
+		
+				\begin{equation}\label{eq:s2}
+				\dot{S}=-\delta_SS-\delta_CP^2S
+				\end{equation}
+				
+				\begin{equation}\label{eq:p2}
+				\dot{P}=\rho_P-\delta_PP+(v-2\delta_C)P^2S
+				\end{equation}
+				
+				\begin{equation}\label{eq:f2}		
+				\dot{F}=\rho_F\dfrac{1}{(P^2S)^2+1}-\delta_FF
+				\end{equation}
+				\vspace{1mm}
+	
+		Again, we will set each equation equal to zero to obtain the equilibria. In this instance, there are 2 complex equilibria and one real valued equilibria. Since complex values of components have no application in this context, we will only acknowledge the real equilibria at (0, $\frac{\rho_P}{\delta_P}$, $\frac{\rho_F}{\delta_F}$). Below is the Jacobiam matrix evaluated at the equilibrium.
+	
+			
+			$$J = 
+				\left.\left(\begin{matrix}
+				\vspace{2mm}
+				-\delta_CP^2-\delta_S & -2PS\delta_C 	& 0  \\
+				\vspace{2mm}
+				(v-2\delta_C)P^2    & 2(v-2\delta_C)PS-\delta_P    & 0  \\
+				\dfrac{-2P^4S\rho_F}{[(P^2S)^2+1]^2}	&\dfrac{-4P^3S^2\rho_F}{[(P^2S)^2+1]^2}		& -\delta_F	\\
+				\end{matrix}
+				\right)\right|_{\left(0, \dfrac{\rho_P}{\delta_P}, \dfrac{\rho_F}{\delta_F}\right)}$$
+				
+				\vspace{3mm}
+				
+			\begin{equation}				
+				\hspace{-.5mm}\longrightarrow \hspace{10mm} \left(\begin{matrix}
+				\vspace{2mm}
+				-\delta_S-\dfrac{\delta_C\rho_P^2}{\delta_P^2}      & 0 	& 0  \\
+				\vspace{2mm}
+				\dfrac{\rho_P^2(v-2\delta_C)}{\delta_P^2}      & -\delta_P    &0   \\
+				0		&0		& 	-\delta_F\\
+				\end{matrix}\right)
+			\end{equation} 
+			\vspace{1mm}
+			
+		The Jacobian evaluates to a lower triangular matrix, so the eigenvalues for this equilibria can be gleaned from the diagonal. They are given by:
+		
+			\begin{equation}
+					\lambda_1=-\delta_S-\dfrac{\delta_C\rho_P^2}{\delta_P^2} \hspace{10mm} \lambda_2=-\delta_P \hspace{10mm} \lambda_3=-\delta_F
+			\end{equation}
+			\vspace{1mm}
+			
+		Even using generic parameters, we know that the equilibrium must have all positive values and the eigenvalues must all be negative. No further investigation is needed, as it is clear that the equilibrium will be stable for all positive parameter values and attracting for any initial conditions. This domain and the implications of its stability will be discussed further in the \textbf{Results} section.
+	
+	\subsection{Lumen and Outer Mesenchyme Domains}
+	
+		Since the production and degradation in both the lumen and the outer mesenchyme domains have similar properties, we can evaluate them simultaneously. Most parameters in this domain are zero, and we are left exclusively with decay constant terms. The production of each component has been modeled in in previous sections, so with zero genetic production in these domains we are left with the following simple system:
+	
+				\begin{equation}\label{eq:s3}
+				\dot{S}=-\delta_SS
+				\end{equation}
+				
+				\begin{equation}\label{eq:p3}
+				\dot{P}=0
+				\end{equation}
+				
+				\begin{equation}\label{eq:f3}		
+				\dot{F}=-\delta_FF
+				\end{equation}
+				\vspace{1mm}	
+		
+		We can quickly see that the system has the origin as the only equilibrium solution. There is no need to evaluate the Jacobian matrix at the equilibrium, as it already has the form:
+			
+				\begin{equation}
+				J = 
+				\left(\begin{matrix}
+				-\delta_S & 0 	& 0  \\
+				0    & 0    & 0  \\
+				0			&0			& -\delta_F	\\
+				\end{matrix}\right)
+				\end{equation}
+				\vspace{1mm}
+				
+		Thus the eigenvalues at this equilibria are $-\delta_F$, $-\delta_S$, and 0. The presence of a zero eigenvector indicates verification of stability is needed. Note that these equilibrium and eigenvalues are somewhat similar to those from the stability analysis of the epithelium domain. However, the system here will exhibit different behavior (albeit similar stability dynamics). There is no need for a numerical approximation solver for these ODEs, as they are uncoupled and can be solved analytically. Assuming the initial conditions of $S(t)=0,$ $ P(t)=0,$ and $ F(t)=0$, the solutions to this system are given by:
+		
+		\begin{equation}
+			S(t) = e^{-\delta_St} \hspace{1cm} P(t) = 0 \hspace{1cm} F(t) = e^{-\delta_Ft}
+		\end{equation}
+		\vspace{-1mm}
+
+		These solutions include two independent Malthusian decay models and one constant, zero. This is expected, as there is no production in these regions and thus no component is replenished. Also, since Ptc-1 lives on the membrane between the epithelium and the mesenchyme, it cannot exist in the lumen or the outer mesenchyme domains. Since each component is degrading, we should have a stable system that decays toward the origin under any initial conditions (assuming that $P(t)=0$ $\forall t \geq 0$). Using the default parameter values from table \ref{table:parameters}, we can plot a phase portrait to examine the system's behavior about the equilibrium at the origin.
+	
+		\begin{figure}[H]
+			\centering{\includegraphics[width=15cm]{p2.png}}
+			\caption{Cavity Domains Phase Portrait About Equilibrium $(0,0,0)$}
+			\label{figure:d3phase}
+		\end{figure}
+	
+		Like the phase portraits in the previous section, the initial conditions are represented by the blue dot. This starting point is located at $(0.1, 0, 0.1)$. The red dot at the origin is also an attractor. Since $P(t)$ is zero, there can be no change with respect to the axis assigned to $P(t)$. However, the trajectory toward the origin from the other functions is clear. This system is stable at the equilibrium located at the origin, as any initial values will degrade to $(0,0,0)$.
+		
+		\pagebreak
+
+\section{Results}
+
+	After performing a stability analysis for each domain, corresponding time series plots were created. In addition, graphs with varying parameters are compared to determine if Menshykau's PDE results are in line with simplified ODE system. MATLAB's {\it ode23s()} was used to create these graphs. This function was chosen because the system displayed some oscillations and appeared to be stiff, and {\it ode23s()} was created specifically to handle stiff ODEs.\cite{Shampine1997}  A discussion on the drawbacks of a simplified system is also included here. The code for implementation can be found in Figures \ref{figure:code1a}-\ref{figure:code2} in the \textbf{Appendix}. 
+
+	\subsection{Time Series Graphs: Epithelium Domain}
+	
+		First, we will examine the time series graph representing the gene expression dynamics in the epithelium domain, as shown in Figure \ref{figure:d1time}. Since SHH is produced here, $S(t)$ levels initially rise. Because SHH acts as a repressor for FGF10, $F(t)$ immediately declines, approaching zero relatively soon. The equilibria here have the form $(0,P,0)$ indicating that Ptc-1 has little effect on the genetic dynamics here. Indeed, altering the initial condition for $P(t)$ had no discernible effect on $S(t)$ and $F(t)$ in the time series graph. This model indicates that the SHH-Ptc-1 complex formation decays proportional to the rate that it forms, resulting in a steady state of Ptc-1. This is not the intended behavior of the original PDE model. Ptc-1 levels should influence SHH and FGF10 expression in this domain. Since any value of $P(t)$ yields and equilibrium, crucial information may have been lost when simplifying this system to create ODEs.
+	
+			\begin{figure}[H]
+				\centering{\includegraphics[width=15cm]{t1.png}}
+				\caption{Epithelium Domain Time Series With Initial Values $(0.01,0.01,0.01)$}
+				\label{figure:d1time}
+			\end{figure}
+	
+	\pagebreak
+	
+		One claim that Menshykau made is that the dimensionless parameters were relative to each other, and global relative increases or decreases do not significantly reflect the behavior of the system. Indeed, examining the time series graph for the epithelium region when each parameter is either doubled or halved yields the same dynamics. The differences between these two parameter sets are shown in Figure \ref{figure:d1par}. As we might expect, an increase in the parameters "steepens" the curves in the graph, while a decrease "smooths" the curves in the graph. The maximum value of $S(t)$ did not change, and the behavior of the system moving toward the equilibrium only differs by the length of time it takes to achieve steady state. This indicated that the ODE simplification retains the property that the dimensionless parameters are relative to each other when modeled in the epithelium domain.
+	
+			\begin{figure}[H]
+				\centering{\includegraphics[width=15cm]{t1b.png}}
+				\caption{Epithelium Domain Global Parameter Manipulation}
+				\label{figure:d1par}
+			\end{figure}
+	
+		Menshykau's paper also presents values for growth and decay parameters that influence branch selection mode. He states that increasing the parameter $\delta_S$ by a factor of 2.3 up to a factor of 7 yields bifurcation growth, rather that the lateral growth observed in the model for lower values of $\delta_S$. In the simplified ODE model, shown below in Figure \ref{figure:d1par2}, increasing the SHH decay coefficient $\delta_S$ by a factor of 2.3 while leaving the rest of the parameters undisturbed decreases the maximum value of $S(t)$ from 0.0240 to 0.0225. A more dramatic decrease is observed when $\delta_S$ is increased by a factor of 7; the maximum value of $S(t)$ decreases to 0.0192.
+		
+		The global dynamics are again the same. The indications that these parameters resulted in bifurcation growth rather than lateral growth are not present in the ODE model, as far as can be told. The PDE model offers significantly different dynamics at these parameter values, but since the diffusion terms have been excluded there is no information about which branch mode is occurring. 
+	
+			\begin{figure}[H]
+				\centering{\includegraphics[width=15cm]{t1c.png}}
+				\caption{Epithelium Domain Single Parameter Manipulation of $\delta_S$}
+				\label{figure:d1par2}
+			\end{figure}
+		
+		\subsection{Time Series Graphs: Mesenchyme Domain}
+	
+		Figures \ref{figure:d2time}-\ref{figure:d2par2} below show the time series graphs of the mesenchyme domain, with Figure \ref{figure:d2par} mimicking the parameter manipulation implemented in the epithelium domain earlier. FGF10 is produced in the mesenchyme, and increases in this domain as expected. Despite the presence of Ptc-1, there is no FGF10 repression, as SHH is not present to bind to the Ptc-1 and act as a repressor. Even though SHH-Ptc-1 complex formation exists in this domain, the graph indicates that the complex is either not forming or forming at a rate equal to SHH diffusion into the mesenchyme. Of course, since the simplification of the system does not have the diffusion rates, we cannot observe the dynamics between SHH and Ptc-1 in this domain with an ODE model.
+	
+		
+			\begin{figure}[H]
+				\centering{\includegraphics[width=15cm]{t2.png}}
+				\caption{Mesenchyme Domain Time Series With Initial Values $(0,0,0)$}
+				\label{figure:d2time}
+			\end{figure}
+	
+			\pagebreak
+		
+		In Figure \ref{figure:d2par} below, we see the result of the same parameter manipulation described earlier. As expected, doubling each parameter decreases the time needed to reach equilibrium and halving the parameters increases the time needed to reach equilibrium. In both cases, the equilibrium is at $(0,0.6,0.7)$, which is the same as the equilibrium for the time series graph using unaltered parameters.
+	
+			\begin{figure}[H]
+				\centering{\includegraphics[width=15cm]{t2b.png}}
+				\caption{Mesenchyme Domain Global Parameter Manipulation}
+				\label{figure:d2par}
+			\end{figure}
+	
+		Figure \ref{figure:d2par2} shows the results of decreasing the production parameters and increasing the degradation parameters in order to trigger bifurcation growth, as done in the Menshykau paper. Like the previous example when $\delta_S$ was manipulated, there is no significant indication that bifurcation branching is occurring other than differences in maximum values. Manipulating other parameters may give rise to different dynamics, but without the same parameters used in the PDE model, no meaningful connection can be inferred. 
+	
+			\begin{figure}[H]
+				\centering{\includegraphics[width=15cm]{t2c.png}}
+				\caption{Mesenchyme Domain Weighted Parameter Manipulation}
+				\label{figure:d2par2}
+			\end{figure}
+		
+			\pagebreak
+			
+		\subsection{Time Series Graphs: Cavity Domains}
+	
+		Finally, the cavity domains time series are shown below. With no production of any component in these regions, there is only component decay. The time series graph in Figure \ref{figure:d3time} reflects this. Figure \ref{figure:d3par} displays basic parameter manipulation. Like the previous two, doubling and halving the parameters facilitates a quicker or slower trajectory toward the equilibrium, respectively. Additional parameter manipulation was not included for this domain, due to the overall lack of parameters present and the similarity to the existing parameter manipulation graphs. Even if bifurcation could be detected in these graphs, there is no such activity in these domains and therefore no indication of branching mode. In this respect, the ODE and PDE systems agree.
+
+			\begin{figure}[H]
+				\centering{\includegraphics[width=15cm]{t3.png}}
+				\caption{Cavity Domains Time Series With Initial Values $(0.01,0,0.01)$}
+				\label{figure:d3time}
+			\end{figure}
+		
+			\begin{figure}[H]
+				\centering{\includegraphics[width=15cm]{t3b.png}}
+				\caption{Cavity Domains Parameter Manipulation}
+				\label{figure:d3par}
+			\end{figure}
+			
+			\pagebreak
+	
+	\subsection{Discussion}
+	
+		Menshykau's observation that the parameters are relative to each other seem to be accurate regarding the simplified model. Uniform changes in parameters do not effect the overall dynamics of the system. In fact, the system is stable for any positive parameters and positive initial conditions given, so very large changes will have no effect on stability. This differs significantly from the PDE system, which has limited stability regions.
+		
+		Another significant difference is the lack of branch mode indicators when parameters are manipulated in the ODE system. Manshykau presented several graphs depicting clear branching modes based on differing parameters. That information seems to be largely lost when the PDE system is simplified. The only indicator for branch mode changes might be examining maximum values for specific components in individual domains, but there is no way to verify the effect of parameter changes that are not included in Menshykau's paper.
+	
+		Although this analysis was a good exercise in examining the basics of genetic expression in lung development, it shed no light on branch mode selection behavior and ultimately has little use for future studies. With an increased knowledge of PDE analysis tools, more fruitful research can begin.
+
+\section{Conclusion}
+
+	This report examined the basics of RNA behavior in genetic expression, the cycle of genetic expression in developing mammalian lungs, the stability of a simplified system describing that cycle, and the visualization of that cycle via time series graphs. Each analysis was performed using MATLAB for calculations and visualizations. While the analysis performed did not reveal useful new information about this topic, it allowed for a demonstration of basic tools used in mathematical modeling. Future research on this topic will be significantly more technical and hopefully more enlightening.
+	
+	Ideally, this research path will contribute to progressive medical application  realizations. Once there is a better understanding of lung development, we can apply that knowledge to regenerative technologies that can help those suffering from injury or genetic diseases.
+	
+	Like any mathematical application in biology, the goal is to create a model that leads to testable predictions. In the absence of this accomplishment, an equally useful goal is to create a model that eliminates a theory from the pool of possible solutions. Either way, I hope to continue learning new ways to approach this problem.
+	
+		\pagebreak
+	
+\section{References}
+
+	\begingroup
+	\renewcommand{\section}[2]{}%
+	\nocite{*}
+	\bibliographystyle{acm}
+	\bibliography{Final636}
+	\endgroup
+	
+	\pagebreak
+
+\section{Appendix}
+
+	\subsection*{MATLAB Code}
+	
+	This section provides an example of the MATLAB code used to preform the stability analysis and create the phase portrait and time series graphs for the epithelium domain. The following images are representative of the code used for the mesenchyme and cavity domains as well.
+
+		\begin{figure}[H]
+			{\includegraphics[width=11.5cm, trim={0 9cm 0 0},clip]{code1.png}}
+			\caption{Sample Code for Stability Analysis}
+			\label{figure:code1a}
+		\end{figure}
+	
+		\vspace{-5mm}
+		
+		\begin{figure}[H]
+			{\includegraphics[width=11.5cm, trim={0 0 0 11cm},clip]{code1.png}}
+			\caption{Sample Code for Time Series Graphs}
+			\label{figure:code1b}
+		\end{figure}
+	
+		\vspace{2mm}
+	
+		\begin{figure}[H]
+			{\includegraphics[width=13.5cm]{code2.png}}
+			\caption{Sample Code for {\it ode23s()} Target Function}
+			\label{figure:code2}
+		\end{figure}
+
+\end{document}
+

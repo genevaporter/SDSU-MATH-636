@@ -1,0 +1,23 @@
+% create vectors td, p0, hare, lynx
+
+>> step1
+ 
+Exiting: Maximum number of function evaluations has been exceeded
+         - increase MaxFunEvals option.
+         Current function value: 596.367098 %first guess SSE
+
+% make sure vectors are same dimensions (may need to transpose)
+
+>> p=fminsearch(@leastcomplv,p,[],td,hare,lynx) %run till answer repeats
+
+p =
+
+   34.9134    3.8566    0.4807    0.0248    0.9272    0.0276 %parameters
+
+>> leastcomplv(p,td,hare,lynx)
+
+ans =
+
+  594.9356 %SSE
+
+>> plotPP %perfect graph!

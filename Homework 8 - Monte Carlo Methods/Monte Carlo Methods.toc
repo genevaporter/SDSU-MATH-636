@@ -1,0 +1,5 @@
+\select@language {english}
+\beamer@sectionintoc {1}{Operating Room and Recovery Room Usage}{3}{0}{1}
+\beamer@sectionintoc {2}{Population Growth}{9}{0}{2}
+\beamer@sectionintoc {3}{A Game Of Darts}{10}{0}{3}
+\beamer@sectionintoc {4}{Stochastic Birth}{11}{0}{4}

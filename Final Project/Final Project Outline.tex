@@ -1,0 +1,139 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{setspace}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{indentfirst}
+\usepackage{anyfontsize}
+\usepackage{textcomp}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{changepage}
+\usepackage [english]{babel}
+\usepackage [autostyle, english = american]{csquotes}
+\MakeOuterQuote{"}
+
+\graphicspath{}
+
+
+
+\title{Final Project Outline}
+\author{Geneva Porter}
+\date{06 November 2018}
+
+%\begin{figure}[H]
+%\centering{\includegraphics[width=10cm]{FILENAME.eps}}
+%	\caption*{\textbf{CAPTION}}
+%\end{figure}
+
+%$\begin{bmatrix}
+%11      & 12  \\
+%21      & 22  \\
+%\end{bmatrix}$
+
+\begin{document}
+	
+	\maketitle
+	\thispagestyle{empty}
+	
+	
+	\begin{center}
+		
+		\large \it San Diego State University 
+		
+		Professor Mahaffy, Math 636
+		
+	\end{center}
+	
+	\vspace{5mm}
+	
+		
+	\subsection*{Concept}
+	For this final project, I am interested in modeling the growth of cells in mammalian lung development. There is an interesting physical bifurcation behavior that appears in early lung development, and many of the mechanics of this process are still unknown$^{[*]}$. We can, however, model the number of cells present at various stages in development via a exponential (or other type of) population growth model. Several models will be created and compared with one another for accuracy against the data set. Current models using more advanced procedures and biological modeling programs like BALSA will be examined and compared with the models that I created.
+	
+	\subsection*{Mathematics}
+	To create these models, I will first find one or multiple data sets that give quantitative information on cell growth during a window of time in early lung development. Using these data sets, I will outline several equations studied in class and determine which parameters are needed to fit the model appropriately. I will attempt (but not necessarily include) all the relevant modeling techniques that we have learned, such as linear/polynomial modeling, Allometric modeling, discrete population modeling  (Malthusian, logistic, Ricker's, Beaverton-Holt), continuous population modeling (Malthusian, logistic, and models with Holling's terms), and bifurcation analysis, along with future techniques not yet covered in class.
+		
+	\subsection*{Coding}
+	To complete these proposed models, I will use a combination of MATLAB code provided in lectures and my own, original creation of code to fit these various population models. I will provide detailed documentation and commentary about the functions/scripts used, and create visual representations of all models that I will include in my final report.
+	
+	\subsection*{Challenges}
+	
+	First, finding a dataset of cell counts or similar relevant data has not been fruitful. My ignorance in this field has me searching blindly for what I might need. Consultation with professors and inquiries sent to reserch institutions may help facilitate this issue.
+	
+	
+	Another issue that may come up is that I will be modeling a population that will grow so quickly that an all-encompassing model may not be the best choice. Data that differs in magnitude by several orders might pose a problem. It may be necessary to model very small windows of behavior and combine these discrete pieces to gain a better understanding of behavior. Also, using a variation of allometric techniques may be helpful here.
+	
+	Finally, after some initial research I have found it difficult to obtain articles specifically on cell growth in lung development, as the majority of cell growth journal articles seem to be focused on cancer modeling. I will continue to collect research articles and may possibly change my topic to modeling cancer growth, as there is so much more research on it.
+		
+	
+	\subsection*{References}
+	
+	\vspace{5mm}
+	
+	Shraiman, Boris. "Mechanical feedback as possible regulator of tissue growth."
+	
+	\hspace{10mm} \textit{PNAS}, vol. 102, 2005, pp. 3318-3323.
+	
+	\vspace{5mm}
+	
+	Brodland, G. Wayne. “How Computational Models Can Help Unlock Biological Systems.” 
+	
+	\hspace{10mm} \textit{Seminars in Cell and Developmental Biology}, vol. 47-48, 2015, pp. 62–73.
+	
+	\vspace{5mm}
+	
+	
+	Murray, J. D. “Why Are There No 3-Headed Monsters? Mathematical Modeling in Biology.”
+	
+	\hspace{10mm} \textit{Notices of the American Mathematical Society}, vol. 59, no. 06, 2012, p. 785.
+	
+	\vspace{5mm}
+
+
+\vspace{60mm}	
+	
+\begin{flushleft}
+	\textbf{[*]} I am exploring this topic for my final project in Math 542 - Computational Ordinary Differential Equations. This will involve analyzing cell behavior described by a current theory on lung bifurcation mechanics, creating an ODE that describes such behavior at a bifurcation point, and creating a custom function in MATLAB to solve the ODE.
+\end{flushleft}
+	
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

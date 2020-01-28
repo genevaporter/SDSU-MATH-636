@@ -1,0 +1,558 @@
+\documentclass[12pt]{article}
+ 
+\usepackage[utf8]{inputenc}
+\usepackage{setspace}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{indentfirst}
+\usepackage{anyfontsize}
+\usepackage{textcomp}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{changepage}
+\usepackage [english]{babel}
+\usepackage [autostyle, english = american]{csquotes}
+\usepackage{tabto}
+\usepackage{verbatim}
+\usepackage{wrapfig}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{stackengine}
+\usepackage{scrextend}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{bigints}
+
+
+\graphicspath{}
+\MakeOuterQuote{"}
+
+\title{Monte Carlo Methods}
+\author{Geneva Porter \textbf{816408535}}
+\date{20 November 2018}
+
+\begin{comment}
+
+\begin{figure}[H]
+\centering{\includegraphics[width=10cm]{FILENAME.eps}}
+\caption*{\textbf{CAPTION}}
+\end{figure}
+
+$\begin{bmatrix}
+11      & 12  \\
+21      & 22  \\
+\end{bmatrix}$
+
+\begin{table}
+11      & 12  \\
+21      & 22  \\
+\end{table}
+
+\end{comment}
+
+\begin{document}
+	
+\begin{titlepage}
+\maketitle
+\thispagestyle{empty}
+
+
+\begin{center}
+	
+\large \it San Diego State University 
+	
+Professor J Mahaffy, Math 636
+
+\end{center}
+\end{titlepage}
+
+\section{Operating Room and Recovery Room Usage}
+
+Consider the classic hospital expansion problem put forth by Schmitz ans Kwak in their 1971 paper "Monte Carlo Simulation of Operating-Room and Recovery-Room Usage." In this paper, they outline a simulation based on the number of operating rooms and recovery rooms planned for a new hospital wing ICU, with the goal of answering the following questions:
+
+\begin{flushleft}
+(1)\hspace{2mm}How many more surgeries are performed because of the increased bed capacity? \\
+\vspace{2mm}
+(2)\hspace{2mm}How much operating room time and space will the surgeries require?\\
+\vspace{2mm}
+(3)\hspace{2mm}How much recovery room time and space will the surgeries require?
+\end{flushleft}
+
+
+We will use Schmitz and Kwak's results for the first question to answer the second and third questions. They were able to gather enough data to create a rubric for the percentage of increased surgeries as well as the likelihood of any particular surgery that is needed. Their simulation was structured using the following criteria: Incoming patients will each need surgery, and the type of surgery is simulated using a probability distribution. Operating rooms open at 7.5 hours (0700), and the length of each surgery varies between 0.5 and 4 hours. Once a patient is out of surgery, the OR takes 0.25 hours to clean and prep for the next patient. The recovery room opens at 0800. Patients that use a recovery bed will take 0.08 hours to travel from the operation room to the recovery room, and stay there for the appropriate length of time depending on their surgical procedure. Once a patient leaves the recovery room, it takes 0.25 hours to prepare the bed for the next patient. Beds are filled ordinally as they become available. If there are no beds available when a patient leaves surgery, a new bed will be opened.
+
+\subsection*{1a. Simulations}
+
+First we will perform two simulations (both using the same set of random numbers) for a hospital expansion that assumes 32 patients come to the ICU per day. We will examine 2 scenarios in which there are either 4 or 5 operating rooms available. Tables \textbf{i} and \textbf{ii} in Appendix A hold results of these simulations.
+
+The simulation in Table \textbf{i} assumes that there are 4 operating rooms available. The last OR closes at 1975 hours, and each one is used an average of 1.2578 hours. The recovery room closes at 2283 hours, and 10 beds are used for recovery. 
+ 
+For a simulation with 5 operating rooms, the last one closes at 1775 hours, and each one is used an average of 1.2578 hours. The recovery room closes at 2083 hours, and 12 beds are used for recovery. 
+
+If we were to run this simulation 100 times, we would get a better sense of expected values. In a simulation with 4 operating rooms, 
+the average OR closure is at 19.2125 hours 
+with a standard deviation of 1.5992. 
+Each OR is used an average of 1.1251 hours, 
+with a standard deviation of 0.1518. 
+The average recovery room closure is at 22.2625 hours, 
+with a standard deviation of 1.6407. 
+An average of 9.9100 beds are used for recovery each day, 
+with a standard deviation of 1.1984. 
+
+For 5 operating rooms, 
+the average OR closure is at 17.2200 hours 
+with a standard deviation of 1.2600. 
+Each OR is used an average of 1.1251 hours, 
+with a standard deviation of 0.1472. 
+The average recovery room closure is at 20.2900 hours, 
+with a standard deviation of 1.2711. 
+An average of 11.4800 beds are used for recovery each day, 
+with a standard deviation of 1.3370. 
+
+ 
+\subsection*{1b. Staffing}
+
+One issue that Schmitz and Kwak did not cover is staffing. Obviously, a bigger hospital means more employee hours. If we examine the staff of nurses needed to maintain this expansion, we can assign hours based on the number of patients present in the recovery room. We assume that the recovery room must always have at least 2 nurses, each nurse can supervise at most 3 patients, and time assignments will be multiples of whole hours. We can use the results for each simulation to create some simple tables illustrating the number of nurses needed for each hour that the recovery room is open. Table 1 below show theses findings.
+
+In both cases (4 and 5 operating rooms) The maximum number of nurses needed during peak hours is 4. If there are 4 operating rooms, 38 staffing hours are needed. For 5 operating rooms, 36 staffing hours are needed.
+
+If we examine 100 simulations and take the average of those results, we see slightly smaller values. With 4 operating rooms, an average of 36.0600 staffing hours are needed, 
+with a standard deviation of 3.4868.  
+An average of 3.4800 nurses are needed during peak hours, 
+with a standard deviation of 0.5021. 
+It takes an average of 34.6900 staffing hours for 5 operating rooms, 
+with a standard deviation of 2.6273. 
+An average of 4.0100 nurses are needed during peak hours, 
+with a standard deviation of 0.5024. 
+
+\begin{table}[H]
+\begin{center}
+	\begin{tabular}{|ccc|}
+		\hline
+		\textbf{Time Block}               & \textbf{\begin{tabular}[c]{@{}c@{}}4 Operating\\ Rooms Used\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}5 Operating\\ Rooms Used\end{tabular}} \\ \hline
+		\multicolumn{1}{|c|}{0800 - 0900} & \multicolumn{1}{c|}{2} & 2 \\ \hline
+		\multicolumn{1}{|c|}{0900 - 1000} & \multicolumn{1}{c|}{2} & 2 \\ \hline
+		\multicolumn{1}{|c|}{1000 - 1100} & \multicolumn{1}{c|}{2} & 2 \\ \hline
+		\multicolumn{1}{|c|}{1100 - 1200} & \multicolumn{1}{c|}{2} & 3 \\ \hline
+		\multicolumn{1}{|c|}{1200 - 1300} & \multicolumn{1}{c|}{3} & 3 \\ \hline
+		\multicolumn{1}{|c|}{1300 - 1400} & \multicolumn{1}{c|}{2} & 4 \\ \hline
+		\multicolumn{1}{|c|}{1400 - 1500} & \multicolumn{1}{c|}{3} & 4 \\ \hline
+		\multicolumn{1}{|c|}{1500 - 1600} & \multicolumn{1}{c|}{2} & 4 \\ \hline
+		\multicolumn{1}{|c|}{1600 - 1700} & \multicolumn{1}{c|}{4} & 3 \\ \hline
+		\multicolumn{1}{|c|}{1700 - 1800} & \multicolumn{1}{c|}{3} & 3 \\ \hline
+		\multicolumn{1}{|c|}{1800 - 1900} & \multicolumn{1}{c|}{4} & 2 \\ \hline
+		\multicolumn{1}{|c|}{1900 - 2000} & \multicolumn{1}{c|}{3} & 2 \\ \hline
+		\multicolumn{1}{|c|}{2000 - 2100} & \multicolumn{1}{c|}{2} & 2 \\ \hline
+		\multicolumn{1}{|c|}{2100 - 2200} & \multicolumn{1}{c|}{2} & closed \\ \hline
+		\multicolumn{1}{|c|}{2200 - 2300} & \multicolumn{1}{c|}{2} & closed \\ \hline
+	\end{tabular}
+\end{center}
+	\caption*{\textbf{Table 1} Staffing Needs with 4 or 5 Operating Rooms}
+\end{table}
+
+\subsection*{1c. Discussion}
+
+When comparing the single simulations between a hospital with 4 or 5 ORs, we see that fewer rooms means longer staffing hours yet fewer recovery beds used. This is because patients will be moved to the recovery rooms at slower pace, creating more opportunity for recovery beds to be prepped. Repeating these simulations 100 times shows us that our initial simulations were fairly typical and fall within one standard deviation of the mean, with one exception. Although our single simulations predicted a maximum of 4 nurses  needed in the recovery room at any given time for both the 4 OR and the 5 OR situations, it is more likely that only 3 will be needed in the 4 OR model. Our prediction of needing 4 nurses in the recovery room for a 4 OR model is only within 2 standard deviations of the mean. 
+
+We can conclude that including an additional OR allows both the ORs and recovery rooms to close about 2 hours earlier, and nurse staffing hours are reduced by 2. The additional expense paying a surgeon in an additional OR may not be worth it just to save nursing 2 hours per day. However, assuming nurses make about \$30 per hours, having 5 ORs would save about \$15,600 per year in nurse salaries.
+
+\pagebreak
+
+\subsection*{1d. Program}
+
+To create an automated version of this analysis, it is necessary to employ a series of nested for loops and if statements. The exact MATLAB code used is shown in Figure \textbf{i} of Appendix A, and the general algorithm used for these simulations is shown below:
+
+\begin{figure}[H]
+	\centering{\includegraphics[width=15cm]{flowChart.png}}
+	\caption*{\textbf{Figure 1} Flow Chart for Hospital Monte Carlo Simulation}
+\end{figure}
+
+\section{Population Growth}
+
+A simple Malthusian growth model can often be sufficient for modeling populations that grow exponentially. However, a Monte Carlo simulation is discrete and accounts for variance. The following briefly examines both model types.
+
+\subsection*{2a. Malthusian Growth}
+
+If we consider a Malthusian Growth model with a 4\% annual growth, it will have the form
+
+\begin{center}
+	$P_{n+1}=1.04P_n$ \hspace{5mm} $\longrightarrow$ \hspace{5mm} $P_{n+1} = 1.04^nP_0$
+\end{center}
+
+With $P_0=50$ and $n$ given as years. After 10 years, the population will be approximately 74.0122. We can solve $P_{n+1}=100$ to see that it will take 17.6730 years for the population to double. This model is easy to work with and can quickly predict unhindered growth.
+
+\subsection*{2b. Birth Only Simulation}
+
+Rather than expecting the population to grow by exactly 4\% each year, we can use a Monte Carlo simulation to consider each individual in the population as having a 4\% chance of giving birth for a particular year. Our simulation will also include the possibility that individuals born one year can give birth the next. Table 4 below shows one simulation, which results in a population of 72 after 10 years.
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+			\hline
+			Time (in years) & 0  & 1  & 2  & 3  & 4  & 5  & 6  & 7  & 8  & 9  \\ \hline
+			Population      & 50 & 52 & 53 & 58 & 60 & 63 & 66 & 67 & 70 & 72 \\ \hline
+		\end{tabular}
+		\caption*{\textbf{Table 4} Population Simulation Over 10 Years}
+	\end{center}
+\end{table}
+
+\subsection*{2c. Discussion}
+
+Running this simulation 1000 times, we get a mean of 74.0110 for the final population, with a standard deviation of 5.7526. Table 4 gives a final population within 1 standard deviation of the mean. We can say that the Monte Carlo simulation was likely successful (since the mean was very close to our Malthusian growth model). In this case, the Malthusian model would be better to use because it is significantly less complex yet produces good enough results.
+
+\section{A Game Of Darts}
+
+Here, we examine a standard dart board (Figure 1). On it, there are 6 areas in with to score: the inner bullseye (red), the outer bullseye (green), single rings (black and tan), double ring (outer red and green), triple ring (inner red and green) and the zero ring (black with numbers).
+
+Figure 1: standard dart board
+
+\subsection*{3a. A Single Round Of Play: Examples}
+
+In the common game of 501-darts, the goal is to reach a score of zero. Each player (or team) begins with a score of 501, and points are subtracted as they are won during rounds. The winning throw must bring the score to exactly zero and land on the double ring. The best possible score in a single round (throwing 3 darts) is 180. This corresponds to each of the three darts landing on the triple ring of the 20 section, and receiving a triple score for each hit. This score is highly unlikely, with a probability of 0.005\% (if the dart board is hit randomly). For the average player with the basic skill necessary to hit the dart board for each throw, a round of play might score around 20 points. Table 5 below a simulation for 5 typical rounds of play if the board was hit randomly.
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|}
+			\hline
+			Round & Throw 1 & Throw 2 & Throw 3 & Total Score \\ \hline
+			1     & 8       & 10       & 10       & 28          \\ \hline
+			2     & 1	    & 20       & 0       & 21          \\ \hline
+			3     & 6       & 0       & 0       & 6           \\ \hline
+			4     & 0       & 26      & 0       & 26          \\ \hline
+			5     & 10       & 14      & 0       & 24          \\ \hline
+		\end{tabular}
+		\caption*{\textbf{Table 5} 5 Rounds of Darts}
+	\end{center}
+\end{table}
+
+\subsection*{3b. A Single Round Of Play: Averages}
+
+A Monte Carlo simulation of 10,000 rounds produced an average score for three throws is 22.0484, with a standard deviation of 17.2120. For single vs. single play, it is likely that over 20 rounds must be played before a player wins.
+
+\subsection*{3c. Discussion}
+
+These simulations have assumed that the dart board was hit randomly. Most players will have the intention of hitting closer to the center, and the chances of hitting the zero ring go down as the player skill goes up. A more realistic model would put less weight on the probability of hitting the zero ring. Gathering data on players of all skill levels might show that the chance of hitting the zero ring is significantly less than if the board were hit randomly. However, a double score is needed to win. Players aiming for a double score to win are much more likely to hit the zero ring. A simulation for an entire game of darts rather than single rounds could fix these issues by weighing the probability of scores differently for the winning round.
+
+\section{Stochastic Birth}
+
+A stochastic birth process is one in which the birth rate may be analyzed statistically but not calculated precisely. Here we will consider a birth-only process, where only one birth is possible in some time interval $\Delta t$. The probability that the population will be some value $N$ after some $\Delta t$ amount of time is given by:
+
+\begin{center}
+	$P_N(t+\Delta t)=P_N(t)(1-\lambda N\Delta t)+P_{N-1}(t)\lambda(N-1)\Delta t$, $P_N(0)=\begin{cases}0$ if $ N \neq N_0 \\ 1$ if $N=N_0 \end{cases}$
+\end{center}
+
+In the above equation, we have several values to define. First, $P_N(t)$ is the probability that the population will be $N$ at time $t$. Since $\lambda$ is the birth rate, the value $\lambda N\Delta t$ is the probability that the population will increase to $N+1$ after a time interval of $\Delta t$, given that the population began at $N$ at time $t$. $N_0$ is our initial population. If we manipulate the equation above, we get:
+
+\begin{center}
+	$\dfrac{P_N(t+\Delta t)-P_N(t)}{\Delta t} = -\lambda NP_N(t)+\lambda(N-1)P_{N-1}(t)=\dfrac{dP_N(t)}{dt}$
+\end{center}
+
+By replacing $N$ with $N_0$ (and noting that $P_{N_0-1}=0$ for a birth-only process), the solution to this differential equation is $P_{N_0}(t) = e^{-\lambda N_0t}$. As we increase $N$, our calculations become more complex. For $N=N_0+1$, we have:
+
+
+  \begin{center}
+  	$P_{N_0+1}(t+\Delta t)=P_{N_0+1}(t)(1-\lambda (N_0+1)\Delta t)+P_{N_0}(t)\lambda(N_0)\Delta t$
+  \end{center}
+
+
+\begin{center}
+	$\longrightarrow \hspace{5mm}\dfrac{dP_{N_0+1}(t)}{dt} = 
+	-\lambda (N_0+1)P_{N_0+1}(t)+\lambda(N_0)P_{N_0}(t) $
+\end{center}
+  
+Here, we can use the standard solution: 
+
+\begin{center}
+	$\dfrac{dX(t)}{dt} = a(t)X(t)+b(t) \hspace{5mm} \longrightarrow \hspace{5mm}
+X(t) = e^{\int_0^t a(s)ds}\int_0^tb(s)\cdot e^{\int_0^s-a(u)du}ds+X_0e^{\int_0^ta(s)ds}$
+\end{center}
+
+Where $X_0 = P_{N_0+1}(0) = 0$. Applying this standard solution to $P_{N_0+1}(t)$ and substituting $P_{N_0}(t)$ with our previous solution $e^{-\lambda N_0t}$ gives us:
+
+\begin{center}
+	$P_{N_0+1}(t)=e^{-\lambda(N_0+1)t}\int_0^t\lambda(N_0)e^{-\lambda N_0s}\cdot e^{\lambda(N_0+1)s}ds+0 \hspace{5mm} \longrightarrow \hspace{5mm} =N_0e^{-\lambda N_0t}(1-e^{-\lambda t})$
+\end{center}
+
+If we repeat this process for $N=N_0+2$ and $N=N_0+3$, we will see:
+
+
+\begin{flushleft}
+	\hspace{2cm}$P_{N_0+2} = \dfrac{(N_0)(N_0+1)}{2}e^{-\lambda N_0t}(1-e^{-\lambda t})^2$ and
+\end{flushleft}
+
+\begin{flushleft}
+	\hspace{2cm}$P_{N_0+3} = \dfrac{(N_0)(N_0+1)(N_0+2)}{2\cdot 3}e^{-\lambda N_0t}(1-e^{-\lambda t})^3$, and ultimately
+\end{flushleft}
+
+\begin{flushleft}
+	\hspace{2cm}$P_{N_0+j} = \dfrac{(N_0)(N_0+1)...(N_0+j-1)}{j!}e^{-\lambda N_0t}(1-e^{-\lambda t})^j$
+\end{flushleft}
+
+We can prove that this form hold true for all $j+1$ with $j \in$ \textbf{N}. Our goal is to show the following:
+
+\begin{center}
+	$\dfrac{dP_{N_0+j+1}(t)}{dt} = 
+	-\lambda (N_0+j+1)P_{N_0+j+1}(t)+\lambda(N_0+j)P_{N_0+j}(t)$
+\end{center}
+
+\begin{center}
+	$\hspace{5mm}\longrightarrow \hspace{5mm}
+	P_{N_0+j+1}(t) = \dfrac{(N_0)(N_0+1)...(N_0+j)}{(j+1)!}e^{-\lambda N_0t}(1-e^{-\lambda t})^{j+1}$
+\end{center}
+
+\subsection*{4a. Proof by Induction}
+
+\begin{flushleft}
+	Let \hspace{3mm} $a(t)=-\lambda (N_0+j+1)$ and $b(t)=\lambda(N_0+j)P_{N_0+j}(t)$.
+
+\end{flushleft}
+
+\begin{flushleft}
+	If \hspace{3mm} $\dfrac{dP_{N_0+j+1}(t)}{dt} = a(t)P_{N_0+j+1}(t)+b(t)$ \hspace{3mm} then
+\end{flushleft}
+
+\begin{center}
+	$P_{N_0+j+1}(t)=e^{-\lambda (N_0+j+1)t}\bigintsss_0^t\lambda(N_0+j)P_{N_0+j}(s)e^{\lambda (N_0+j+1)s}ds+P_{N_0+j+1}(0)e^{-\lambda (N_0+j+1)t}$
+\end{center}
+
+\begin{flushleft}
+	Substituting \hspace{3mm} $P_{N_0+j}(s)=\dfrac{(N_0)(N_0+1)...(N_0+j-1)}{j!}e^{-\lambda N_0s}(1-e^{-\lambda s})^j$ \hspace{3mm} we get:
+\end{flushleft}
+
+\begin{center}
+	$e^{-\lambda (N_0+j+1)t}\bigintsss_0^t\lambda(N_0+j)\dfrac{(N_0)(N_0+1)...(N_0+j-1)}{j!}e^{-\lambda N_0s}(1-e^{-\lambda s})^je^{\lambda (N_0+j+1)s}ds$
+\end{center}
+
+\begin{flushleft}
+	For $P_{N_0+j+1}(t)$. Using the binomial expansion theorem, we can substitute:
+\end{flushleft}
+	
+\begin{center}
+	$(1-e^{-\lambda s})^j=\sum\limits_{k=0}^j\dfrac{j!}{k!(j-k)!}(-e^{-\lambda s})^{k}$
+\end{center}
+
+\begin{flushleft}
+	Simplifying, we now have:
+\end{flushleft}
+
+\begin{center}
+	$e^{-\lambda (N_0+j+1)t}\lambda\dfrac{(N_0)(N_0+1)...(N_0+j)}{j!}
+	\bigintsss_0^t\sum\limits_{k=0}^j\dfrac{j!}{k!(j-k)!}(-1)^{k}(e^{\lambda s})^{j+1-k}ds$
+\end{center}
+
+\begin{flushleft}
+	For $P_{N_0+j+1}(t)$. Evaluating the integral, we get:  
+\end{flushleft}
+
+\begin{center}
+	$e^{-\lambda (N_0+j+1)t}\lambda\dfrac{(N_0)(N_0+1)...(N_0+j)}{j!} \sum\limits_{k=0}^j\dfrac{j!}{k!(j-k)!}(-1)^{k}\frac{1}{\lambda(j+1-k)}[(e^{\lambda t})^{j+1-k}-1]$
+\end{center}
+
+\begin{flushleft}
+	For $P_{N_0+j+1}(t)$, which we can write as:
+\end{flushleft}
+
+\begin{center}
+	$e^{-\lambda N_0t}\dfrac{(N_0)(N_0+1)...(N_0+j)}{(j+1)!}
+\sum\limits_{k=0}^j\dfrac{(j+1)!}{k!(j+1-k)!}(-e^{-\lambda t})^k[1-e^{-\lambda(j+1-k)t}]$
+\end{center}
+
+\begin{flushleft}
+	Now, our summation is almost complete for $k=0\rightarrow j+1$, however it is missing the last term $k=j+1$. This is resolved when we distribute the summation through the $[1-e^{-\lambda(j+1-k)t}]$ term. We can now state:
+\end{flushleft}
+
+
+\hspace{-13mm}$P_{N_0+j+1}(t)=e^{-\lambda N_0t}\dfrac{(N_0)(N_0+1)...(N_0+j)}{(j+1)!}
+\left\{\left[\sum\limits_{k=0}^{j}\dfrac{(j+1)!}{k!(j+1-k)!}(-e^{-\lambda t})^k\right]+(-e^{-\lambda t})^{j+1}\right\}$
+
+\begin{center}
+	$\longrightarrow \hspace{5mm}P_{N_0+j+1}(t)=e^{-\lambda N_0t}\dfrac{(N_0)(N_0+1)...(N_0+j)}{(j+1)!}
+\sum\limits_{k=0}^{j+1}\dfrac{(j+1)!}{k!(j+1-k)!}(-e^{-\lambda t})^k$
+\end{center}
+
+\begin{center}
+	$\longrightarrow \hspace{5mm}P_{N_0+j+1}(t)=\dfrac{(N_0)(N_0+1)...(N_0+j)}{(j+1)!}e^{-\lambda N_0t}(1-e^{-\lambda t})^{j+1}$
+\end{center}
+
+Which is what we wanted to show. QED.
+
+
+\vspace{4mm}
+
+\subsection*{5a. Model Validity}
+
+Continuing with the same stochastic birth model, we can say that the expected population $E(t)$ is equal to:
+
+\begin{center}
+	$E(t) = \sum\limits_{j=0}^{\infty}(N_0+j)P_{N_0+j}(t)$
+\end{center}
+
+Each term in this summation represents the population increase by $j$ within the time interval $\Delta t$. For $j=0$, our first summation term is $N_0P_{N_0}(t)$, which is simply the initial population ($N_0$) multiplied by the probability $(P_{N_0}(t))$ that the population will stay at $N_0$. The next term gives the population increased by 1 multiplied by the probability that the population will increase by 1, and so on. This fits with the general formula for expected value, which can be described as:
+
+\begin{center}
+	$\sum\limits_{i=0}^n($an event $x_i$ occurring$)\cdot($probability that $x_i$ occurs).
+\end{center}
+
+For $n$ events. Our summation has an upper limit of $\infty$ to account for every possible population increase.
+
+
+\subsection*{5b. Summation Solution}
+
+We can show that the above equation reduces to $E(t)=N_0e^\lambda t$. First, we take the derivative and substitute in our first definition of $dP_N(t)/dt$:
+
+\begin{center}
+	$\dfrac{dE(t)}{dt}=\sum\limits_{j=0}^{\infty}(N_0+j)[-\lambda(N_0+j)P_{N_0+j-1}(t)+\lambda(N_0+j-1)P_{N_0+j-1}(t)]$
+\end{center}
+
+Examining the first few terms in this summation, we get:
+
+\begin{flushleft}
+	 $\dfrac{dE(t)}{dt}=\lambda(N_0-1)(N_0)P_{N_0-1}(t)-\lambda(N_0)^2P_{N_0}(t)+
+	 \lambda(N_0)(N_0+1)P_{N_0}(t)-$
+\end{flushleft}
+	 
+\begin{flushleft}
+	 $\lambda(N_0+1)^2P_{N_0+1}(t)+
+	 \lambda(N_0+1)(N_0+2)P_{N_0+1}(t)-\lambda(N_0+2)^2P_{N_0+2}(t)+...$
+\end{flushleft}
+
+Since this is a birth-only model, $P_{N_0-1}(t)=0$. We can combine terms in this summation, which reduces to:
+
+\begin{center}
+	$\dfrac{dE(t)}{dt}=\lambda (N_0)P_{N_0}(t)+\lambda (N_0+1)P_{N_0+1}(t)+\lambda (N_0+2)P_{N_0+2}(t)+...$
+\end{center}
+
+Which is simply $\lambda E(t)$. To solve this differential equation, we must first find an initial condition:
+
+\begin{flushleft}
+	$E(0) = \sum\limits_{j=0}^{\infty}(N_0+j)P_{N_0+j}(0)=N_0P_{N_0}(0)+(N_0+1)P_{N_0+1}(0)+(N_0+2)P_{N_0+2}(0)+...$
+\end{flushleft}
+
+Since we defined $P_N(0)=0$ $ \forall$ $ N\neq N_0$ and $P_N(0)=1$ $ \forall$ $ N=N_0$, all but the first term goes to zero, leaving us with $E(0)=N_0$. Using the method described in 4a. with $a(t)=\lambda$ and $b(t)=0$, We see that $E(t)=N_0e^{\lambda t}$.
+
+\subsection*{5c. Discussion}
+
+This result is clearly a much simpler way to compute the expected population. It is identical to the model for exponential growth and decay, implying that the expected value is not a stochastic model. It does not rely on $P_N(t)$ to predict the population.
+
+\subsection*{6 Calculations}
+
+A simple example of this process can be illustrated and used to find the value of $\lambda$ for some population. Let's start with an initial population of $N_0=10,000$ and a data point of $E(20)=14500$. We can then solve for $\lambda$:
+
+\begin{center}
+	$E(20)=10000e^{\lambda\cdot20}=14500 \hspace{5mm} \longrightarrow \hspace{5mm} \lambda = \dfrac{ln(4.5)}{20} \approx 0.01682$
+\end{center}
+
+This corresponds to a birth rate just under 2\%. We can also use our exact value of $\lambda$ to re-write our equation as $E(t) = N_0(4.5)^{t/20}$. 
+
+\pagebreak
+
+\section*{Appendix A: Hospital Room Assignments}
+
+\begin{center}
+	\begin{table}[H]
+		\begin{tabular}{|ccllllllll|}
+			\hline
+			\textbf{Patient}         & \textbf{\begin{tabular}[c]{@{}c@{}}Ran.\\ No.\end{tabular}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Sur.\\ Len.\end{tabular}}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Sur.\\ Begin\end{tabular}}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Sur.\\ Ends\end{tabular}}} & \multicolumn{1}{c}{\textbf{OR}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Rec.\\ Len.\end{tabular}}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Rec.\\ Begin\end{tabular}}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Rec.\\ Ends\end{tabular}}} & \multicolumn{1}{c|}{\textbf{RR}} \\ \hline
+			\multicolumn{1}{|c|}{1}  & \multicolumn{1}{c|}{389}                                    & \multicolumn{1}{l|}{0.75}                                                          & \multicolumn{1}{l|}{7.5}                                                           & \multicolumn{1}{l|}{8.25}                                                        & \multicolumn{1}{l|}{1}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{8.33}                                                          & \multicolumn{1}{l|}{11.33}                                                       & 2                                \\ \hline
+			\multicolumn{1}{|c|}{2}  & \multicolumn{1}{c|}{997}                                    & \multicolumn{1}{l|}{4}                                                             & \multicolumn{1}{l|}{7.5}                                                           & \multicolumn{1}{l|}{11.5}                                                        & \multicolumn{1}{l|}{2}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{11.58}                                                         & \multicolumn{1}{l|}{14.58}                                                       & 2                                \\ \hline
+			\multicolumn{1}{|c|}{3}  & \multicolumn{1}{c|}{198}                                    & \multicolumn{1}{l|}{0.5}                                                           & \multicolumn{1}{l|}{7.5}                                                           & \multicolumn{1}{l|}{8}                                                           & \multicolumn{1}{l|}{3}          & \multicolumn{1}{l|}{1.5}                                                           & \multicolumn{1}{l|}{8.08}                                                          & \multicolumn{1}{l|}{9.58}                                                        & 1                                \\ \hline
+			\multicolumn{1}{|c|}{4}  & \multicolumn{1}{c|}{560}                                    & \multicolumn{1}{l|}{0.75}                                                          & \multicolumn{1}{l|}{7.5}                                                           & \multicolumn{1}{l|}{8.25}                                                        & \multicolumn{1}{l|}{4}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{8.33}                                                          & \multicolumn{1}{l|}{11.33}                                                       & 3                                \\ \hline
+			\multicolumn{1}{|c|}{5}  & \multicolumn{1}{c|}{330}                                    & \multicolumn{1}{l|}{0.5}                                                           & \multicolumn{1}{l|}{8.25}                                                          & \multicolumn{1}{l|}{8.75}                                                        & \multicolumn{1}{l|}{3}          & \multicolumn{1}{l|}{--}                                                            & \multicolumn{1}{l|}{--}                                                            & \multicolumn{1}{l|}{--}                                                          & --                               \\ \hline
+			\multicolumn{1}{|c|}{6}  & \multicolumn{1}{c|}{852}                                    & \multicolumn{1}{l|}{1.75}                                                          & \multicolumn{1}{l|}{8.5}                                                           & \multicolumn{1}{l|}{10.25}                                                       & \multicolumn{1}{l|}{1}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{10.33}                                                         & \multicolumn{1}{l|}{13.33}                                                       & 1                                \\ \hline
+			\multicolumn{1}{|c|}{7}  & \multicolumn{1}{c|}{901}                                    & \multicolumn{1}{l|}{2.25}                                                          & \multicolumn{1}{l|}{8.5}                                                           & \multicolumn{1}{l|}{10.75}                                                       & \multicolumn{1}{l|}{4}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{10.83}                                                         & \multicolumn{1}{l|}{13.83}                                                       & 5                                \\ \hline
+			\multicolumn{1}{|c|}{8}  & \multicolumn{1}{c|}{757}                                    & \multicolumn{1}{l|}{1.25}                                                          & \multicolumn{1}{l|}{9}                                                             & \multicolumn{1}{l|}{10.25}                                                       & \multicolumn{1}{l|}{3}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{10.33}                                                         & \multicolumn{1}{l|}{13.33}                                                       & 4                                \\ \hline
+			\multicolumn{1}{|c|}{9}  & \multicolumn{1}{c|}{769}                                    & \multicolumn{1}{l|}{1.75}                                                          & \multicolumn{1}{l|}{10.5}                                                          & \multicolumn{1}{l|}{12.25}                                                       & \multicolumn{1}{l|}{1}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{12.33}                                                         & \multicolumn{1}{l|}{15.33}                                                       & 6                                \\ \hline
+			\multicolumn{1}{|c|}{10} & \multicolumn{1}{c|}{707}                                    & \multicolumn{1}{l|}{1.25}                                                          & \multicolumn{1}{l|}{10.5}                                                          & \multicolumn{1}{l|}{11.75}                                                       & \multicolumn{1}{l|}{3}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{11.83}                                                         & \multicolumn{1}{l|}{14.83}                                                       & 3                                \\ \hline
+			\multicolumn{1}{|c|}{11} & \multicolumn{1}{c|}{745}                                    & \multicolumn{1}{l|}{1.25}                                                          & \multicolumn{1}{l|}{11}                                                            & \multicolumn{1}{l|}{12.25}                                                       & \multicolumn{1}{l|}{4}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{12.33}                                                         & \multicolumn{1}{l|}{15.33}                                                       & 7                                \\ \hline
+			\multicolumn{1}{|c|}{12} & \multicolumn{1}{c|}{784}                                    & \multicolumn{1}{l|}{1.75}                                                          & \multicolumn{1}{l|}{11.75}                                                         & \multicolumn{1}{l|}{13.5}                                                        & \multicolumn{1}{l|}{2}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{13.58}                                                         & \multicolumn{1}{l|}{16.58}                                                       & 1                                \\ \hline
+			\multicolumn{1}{|c|}{13} & \multicolumn{1}{c|}{608}                                    & \multicolumn{1}{l|}{0.75}                                                          & \multicolumn{1}{l|}{12}                                                            & \multicolumn{1}{l|}{12.75}                                                       & \multicolumn{1}{l|}{3}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{12.83}                                                         & \multicolumn{1}{l|}{15.83}                                                       & 8                                \\ \hline
+			\multicolumn{1}{|c|}{14} & \multicolumn{1}{c|}{796}                                    & \multicolumn{1}{l|}{1.75}                                                          & \multicolumn{1}{l|}{12.5}                                                          & \multicolumn{1}{l|}{14.25}                                                       & \multicolumn{1}{l|}{1}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{14.33}                                                         & \multicolumn{1}{l|}{17.33}                                                       & 4                                \\ \hline
+			\multicolumn{1}{|c|}{15} & \multicolumn{1}{c|}{794}                                    & \multicolumn{1}{l|}{1.75}                                                          & \multicolumn{1}{l|}{12.5}                                                          & \multicolumn{1}{l|}{14.25}                                                       & \multicolumn{1}{l|}{4}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{14.33}                                                         & \multicolumn{1}{l|}{17.33}                                                       & 5                                \\ \hline
+			\multicolumn{1}{|c|}{16} & \multicolumn{1}{c|}{260}                                    & \multicolumn{1}{l|}{0.5}                                                           & \multicolumn{1}{l|}{13}                                                            & \multicolumn{1}{l|}{13.5}                                                        & \multicolumn{1}{l|}{3}          & \multicolumn{1}{l|}{--}                                                            & \multicolumn{1}{l|}{--}                                                            & \multicolumn{1}{l|}{--}                                                          & --                               \\ \hline
+			\multicolumn{1}{|c|}{17} & \multicolumn{1}{c|}{529}                                    & \multicolumn{1}{l|}{0.75}                                                          & \multicolumn{1}{l|}{13.75}                                                         & \multicolumn{1}{l|}{14.5}                                                        & \multicolumn{1}{l|}{2}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{14.58}                                                         & \multicolumn{1}{l|}{17.58}                                                       & 9                                \\ \hline
+			\multicolumn{1}{|c|}{18} & \multicolumn{1}{c|}{879}                                    & \multicolumn{1}{l|}{2.25}                                                          & \multicolumn{1}{l|}{13.75}                                                         & \multicolumn{1}{l|}{16}                                                          & \multicolumn{1}{l|}{3}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{16.08}                                                         & \multicolumn{1}{l|}{19.08}                                                       & 6                                \\ \hline
+			\multicolumn{1}{|c|}{19} & \multicolumn{1}{c|}{389}                                    & \multicolumn{1}{l|}{0.75}                                                          & \multicolumn{1}{l|}{14.5}                                                          & \multicolumn{1}{l|}{15.25}                                                       & \multicolumn{1}{l|}{1}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{15.33}                                                         & \multicolumn{1}{l|}{18.33}                                                       & 3                                \\ \hline
+			\multicolumn{1}{|c|}{20} & \multicolumn{1}{c|}{052}                                    & \multicolumn{1}{l|}{0.5}                                                           & \multicolumn{1}{l|}{14.5}                                                          & \multicolumn{1}{l|}{15}                                                          & \multicolumn{1}{l|}{4}          & \multicolumn{1}{l|}{1.5}                                                           & \multicolumn{1}{l|}{15.08}                                                         & \multicolumn{1}{l|}{16.58}                                                       & 2                                \\ \hline
+			\multicolumn{1}{|c|}{21} & \multicolumn{1}{c|}{629}                                    & \multicolumn{1}{l|}{1.25}                                                          & \multicolumn{1}{l|}{14.75}                                                         & \multicolumn{1}{l|}{16}                                                          & \multicolumn{1}{l|}{2}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{16.08}                                                         & \multicolumn{1}{l|}{19.08}                                                       & 7                                \\ \hline
+			\multicolumn{1}{|c|}{22} & \multicolumn{1}{c|}{760}                                    & \multicolumn{1}{l|}{1.25}                                                          & \multicolumn{1}{l|}{15.25}                                                         & \multicolumn{1}{l|}{16.5}                                                        & \multicolumn{1}{l|}{4}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{16.58}                                                         & \multicolumn{1}{l|}{19.58}                                                       & 10                               \\ \hline
+			\multicolumn{1}{|c|}{23} & \multicolumn{1}{c|}{418}                                    & \multicolumn{1}{l|}{0.75}                                                          & \multicolumn{1}{l|}{15.5}                                                          & \multicolumn{1}{l|}{16.25}                                                       & \multicolumn{1}{l|}{1}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{16.33}                                                         & \multicolumn{1}{l|}{19.33}                                                       & 8                                \\ \hline
+			\multicolumn{1}{|c|}{24} & \multicolumn{1}{c|}{234}                                    & \multicolumn{1}{l|}{0.5}                                                           & \multicolumn{1}{l|}{16.25}                                                         & \multicolumn{1}{l|}{16.75}                                                       & \multicolumn{1}{l|}{3}          & \multicolumn{1}{l|}{1.5}                                                           & \multicolumn{1}{l|}{16.83}                                                         & \multicolumn{1}{l|}{18.33}                                                       & 1                                \\ \hline
+			\multicolumn{1}{|c|}{25} & \multicolumn{1}{c|}{764}                                    & \multicolumn{1}{l|}{1.25}                                                          & \multicolumn{1}{l|}{16.25}                                                         & \multicolumn{1}{l|}{17.5}                                                        & \multicolumn{1}{l|}{2}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{17.58}                                                         & \multicolumn{1}{l|}{20.58}                                                       & 4                                \\ \hline
+			\multicolumn{1}{|c|}{26} & \multicolumn{1}{c|}{225}                                    & \multicolumn{1}{l|}{0.5}                                                           & \multicolumn{1}{l|}{16.5}                                                          & \multicolumn{1}{l|}{17}                                                          & \multicolumn{1}{l|}{1}          & \multicolumn{1}{l|}{1.5}                                                           & \multicolumn{1}{l|}{17.08}                                                         & \multicolumn{1}{l|}{18.58}                                                       & 2                                \\ \hline
+			\multicolumn{1}{|c|}{27} & \multicolumn{1}{c|}{806}                                    & \multicolumn{1}{l|}{1.75}                                                          & \multicolumn{1}{l|}{16.75}                                                         & \multicolumn{1}{l|}{18.5}                                                        & \multicolumn{1}{l|}{4}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{18.58}                                                         & \multicolumn{1}{l|}{21.58}                                                       & 3                                \\ \hline
+			\multicolumn{1}{|c|}{28} & \multicolumn{1}{c|}{471}                                    & \multicolumn{1}{l|}{0.75}                                                          & \multicolumn{1}{l|}{17}                                                            & \multicolumn{1}{l|}{17.75}                                                       & \multicolumn{1}{l|}{3}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{17.83}                                                         & \multicolumn{1}{l|}{20.83}                                                       & 5                                \\ \hline
+			\multicolumn{1}{|c|}{29} & \multicolumn{1}{c|}{601}                                    & \multicolumn{1}{l|}{0.75}                                                          & \multicolumn{1}{l|}{17.25}                                                         & \multicolumn{1}{l|}{18}                                                          & \multicolumn{1}{l|}{1}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{18.08}                                                         & \multicolumn{1}{l|}{21.08}                                                       & 9                                \\ \hline
+			\multicolumn{1}{|c|}{30} & \multicolumn{1}{c|}{775}                                    & \multicolumn{1}{l|}{1.75}                                                          & \multicolumn{1}{l|}{17.75}                                                         & \multicolumn{1}{l|}{19.5}                                                        & \multicolumn{1}{l|}{2}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{19.58}                                                         & \multicolumn{1}{l|}{22.58}                                                       & 1                                \\ \hline
+			\multicolumn{1}{|c|}{31} & \multicolumn{1}{c|}{823}                                    & \multicolumn{1}{l|}{1.75}                                                          & \multicolumn{1}{l|}{18}                                                            & \multicolumn{1}{l|}{19.75}                                                       & \multicolumn{1}{l|}{3}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{19.83}                                                         & \multicolumn{1}{l|}{22.83}                                                       & 6                                \\ \hline
+			\multicolumn{1}{|c|}{32} & \multicolumn{1}{c|}{637}                                    & \multicolumn{1}{l|}{1.25}                                                          & \multicolumn{1}{l|}{18.25}                                                         & \multicolumn{1}{l|}{19.5}                                                        & \multicolumn{1}{l|}{1}          & \multicolumn{1}{l|}{3}                                                             & \multicolumn{1}{l|}{19.58}                                                         & \multicolumn{1}{l|}{22.58}                                                       & 2                                \\ \hline
+		\end{tabular}
+		\caption*{\textbf{Table i} Hospital Simulation with 4 Operating Rooms}
+	\end{table}
+\end{center}
+\vspace{-3mm}
+\begin{center}
+	\begin{table}[H]
+		\begin{tabular}{|ccllllllll|}
+			\hline
+			\textbf{Patient}         & \textbf{\begin{tabular}[c]{@{}c@{}}Ran.\\ No.\end{tabular}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Sur.\\ Len.\end{tabular}}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Sur.\\ Begin\end{tabular}}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Sur.\\ Ends\end{tabular}}} & \multicolumn{1}{c}{\textbf{OR}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Rec.\\ Len.\end{tabular}}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Rec.\\ Begin\end{tabular}}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Rec.\\ Ends\end{tabular}}} & \multicolumn{1}{c|}{\textbf{RR}} \\ \hline
+			\multicolumn{1}{|c|}{1}  & \multicolumn{1}{c|}{389}                                    & \multicolumn{1}{l|}{0.75}                                                        & \multicolumn{1}{l|}{7.5}                                                          & \multicolumn{1}{l|}{8.25}                                                        & \multicolumn{1}{l|}{1}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{8.33}                                                         & \multicolumn{1}{l|}{11.33}                                                       & 2                                \\ \hline
+			\multicolumn{1}{|c|}{2}  & \multicolumn{1}{c|}{997}                                    & \multicolumn{1}{l|}{4}                                                           & \multicolumn{1}{l|}{7.5}                                                          & \multicolumn{1}{l|}{11.5}                                                        & \multicolumn{1}{l|}{2}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{11.58}                                                        & \multicolumn{1}{l|}{14.58}                                                       & 2                                \\ \hline
+			\multicolumn{1}{|c|}{3}  & \multicolumn{1}{c|}{198}                                    & \multicolumn{1}{l|}{0.5}                                                         & \multicolumn{1}{l|}{7.5}                                                          & \multicolumn{1}{l|}{8}                                                           & \multicolumn{1}{l|}{3}          & \multicolumn{1}{l|}{1.5}                                                         & \multicolumn{1}{l|}{8.08}                                                         & \multicolumn{1}{l|}{9.58}                                                        & 1                                \\ \hline
+			\multicolumn{1}{|c|}{4}  & \multicolumn{1}{c|}{560}                                    & \multicolumn{1}{l|}{0.75}                                                        & \multicolumn{1}{l|}{7.5}                                                          & \multicolumn{1}{l|}{8.25}                                                        & \multicolumn{1}{l|}{4}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{8.33}                                                         & \multicolumn{1}{l|}{11.33}                                                       & 3                                \\ \hline
+			\multicolumn{1}{|c|}{5}  & \multicolumn{1}{c|}{330}                                    & \multicolumn{1}{l|}{0.5}                                                         & \multicolumn{1}{l|}{7.5}                                                          & \multicolumn{1}{l|}{8}                                                           & \multicolumn{1}{l|}{5}          & \multicolumn{1}{l|}{--}                                                           & \multicolumn{1}{l|}{--}                                                            & \multicolumn{1}{l|}{--}                                                           & --                                \\ \hline
+			\multicolumn{1}{|c|}{6}  & \multicolumn{1}{c|}{852}                                    & \multicolumn{1}{l|}{1.75}                                                        & \multicolumn{1}{l|}{8.25}                                                         & \multicolumn{1}{l|}{10}                                                          & \multicolumn{1}{l|}{3}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{10.08}                                                        & \multicolumn{1}{l|}{13.08}                                                       & 4                                \\ \hline
+			\multicolumn{1}{|c|}{7}  & \multicolumn{1}{c|}{901}                                    & \multicolumn{1}{l|}{2.25}                                                        & \multicolumn{1}{l|}{8.25}                                                         & \multicolumn{1}{l|}{10.5}                                                        & \multicolumn{1}{l|}{5}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{10.58}                                                        & \multicolumn{1}{l|}{13.58}                                                       & 6                                \\ \hline
+			\multicolumn{1}{|c|}{8}  & \multicolumn{1}{c|}{757}                                    & \multicolumn{1}{l|}{1.25}                                                        & \multicolumn{1}{l|}{8.5}                                                          & \multicolumn{1}{l|}{9.75}                                                        & \multicolumn{1}{l|}{1}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{9.83}                                                         & \multicolumn{1}{l|}{12.83}                                                       & 1                                \\ \hline
+			\multicolumn{1}{|c|}{9}  & \multicolumn{1}{c|}{769}                                    & \multicolumn{1}{l|}{1.75}                                                        & \multicolumn{1}{l|}{8.5}                                                          & \multicolumn{1}{l|}{10.25}                                                       & \multicolumn{1}{l|}{4}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{10.33}                                                        & \multicolumn{1}{l|}{13.33}                                                       & 5                                \\ \hline
+			\multicolumn{1}{|c|}{10} & \multicolumn{1}{c|}{707}                                    & \multicolumn{1}{l|}{1.25}                                                        & \multicolumn{1}{l|}{10}                                                           & \multicolumn{1}{l|}{11.25}                                                       & \multicolumn{1}{l|}{1}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{11.33}                                                        & \multicolumn{1}{l|}{14.33}                                                       & 7                                \\ \hline
+			\multicolumn{1}{|c|}{11} & \multicolumn{1}{c|}{745}                                    & \multicolumn{1}{l|}{1.25}                                                        & \multicolumn{1}{l|}{10.25}                                                        & \multicolumn{1}{l|}{11.5}                                                        & \multicolumn{1}{l|}{3}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{11.58}                                                        & \multicolumn{1}{l|}{14.58}                                                       & 3                                \\ \hline
+			\multicolumn{1}{|c|}{12} & \multicolumn{1}{c|}{784}                                    & \multicolumn{1}{l|}{1.75}                                                        & \multicolumn{1}{l|}{10.5}                                                         & \multicolumn{1}{l|}{12.25}                                                       & \multicolumn{1}{l|}{4}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{12.33}                                                        & \multicolumn{1}{l|}{15.33}                                                       & 9                                \\ \hline
+			\multicolumn{1}{|c|}{13} & \multicolumn{1}{c|}{608}                                    & \multicolumn{1}{l|}{0.75}                                                        & \multicolumn{1}{l|}{10.75}                                                        & \multicolumn{1}{l|}{11.5}                                                        & \multicolumn{1}{l|}{5}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{11.58}                                                        & \multicolumn{1}{l|}{14.58}                                                       & 8                                \\ \hline
+			\multicolumn{1}{|c|}{14} & \multicolumn{1}{c|}{796}                                    & \multicolumn{1}{l|}{1.75}                                                        & \multicolumn{1}{l|}{11.5}                                                         & \multicolumn{1}{l|}{13.25}                                                       & \multicolumn{1}{l|}{1}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{13.33}                                                        & \multicolumn{1}{l|}{16.33}                                                       & 1                                \\ \hline
+			\multicolumn{1}{|c|}{15} & \multicolumn{1}{c|}{794}                                    & \multicolumn{1}{l|}{1.75}                                                        & \multicolumn{1}{l|}{11.75}                                                        & \multicolumn{1}{l|}{13.5}                                                        & \multicolumn{1}{l|}{2}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{13.58}                                                        & \multicolumn{1}{l|}{16.58}                                                       & 5                                \\ \hline
+			\multicolumn{1}{|c|}{16} & \multicolumn{1}{c|}{260}                                    & \multicolumn{1}{l|}{0.5}                                                         & \multicolumn{1}{l|}{11.75}                                                        & \multicolumn{1}{l|}{12.25}                                                       & \multicolumn{1}{l|}{3}          & \multicolumn{1}{l|}{--}                                                           & \multicolumn{1}{l|}{--}                                                            & \multicolumn{1}{l|}{--}                                                           & --                                \\ \hline
+			\multicolumn{1}{|c|}{17} & \multicolumn{1}{c|}{529}                                    & \multicolumn{1}{l|}{0.75}                                                        & \multicolumn{1}{l|}{11.75}                                                        & \multicolumn{1}{l|}{12.5}                                                        & \multicolumn{1}{l|}{5}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{12.58}                                                        & \multicolumn{1}{l|}{15.58}                                                       & 10                               \\ \hline
+			\multicolumn{1}{|c|}{18} & \multicolumn{1}{c|}{879}                                    & \multicolumn{1}{l|}{2.25}                                                        & \multicolumn{1}{l|}{12.5}                                                         & \multicolumn{1}{l|}{14.75}                                                       & \multicolumn{1}{l|}{4}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{14.83}                                                        & \multicolumn{1}{l|}{17.83}                                                       & 7                                \\ \hline
+			\multicolumn{1}{|c|}{19} & \multicolumn{1}{c|}{389}                                    & \multicolumn{1}{l|}{0.75}                                                        & \multicolumn{1}{l|}{12.5}                                                         & \multicolumn{1}{l|}{13.25}                                                       & \multicolumn{1}{l|}{3}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{13.33}                                                        & \multicolumn{1}{l|}{16.33}                                                       & 4                                \\ \hline
+			\multicolumn{1}{|c|}{20} & \multicolumn{1}{c|}{052}                                    & \multicolumn{1}{l|}{0.5}                                                         & \multicolumn{1}{l|}{12.75}                                                        & \multicolumn{1}{l|}{13.25}                                                       & \multicolumn{1}{l|}{5}          & \multicolumn{1}{l|}{1.5}                                                         & \multicolumn{1}{l|}{13.33}                                                        & \multicolumn{1}{l|}{14.83}                                                       & 11                               \\ \hline
+			\multicolumn{1}{|c|}{21} & \multicolumn{1}{c|}{629}                                    & \multicolumn{1}{l|}{1.25}                                                        & \multicolumn{1}{l|}{13.5}                                                         & \multicolumn{1}{l|}{14.75}                                                       & \multicolumn{1}{l|}{1}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{14.83}                                                        & \multicolumn{1}{l|}{17.83}                                                       & 2                                \\ \hline
+			\multicolumn{1}{|c|}{22} & \multicolumn{1}{c|}{760}                                    & \multicolumn{1}{l|}{1.25}                                                        & \multicolumn{1}{l|}{13.5}                                                         & \multicolumn{1}{l|}{14.75}                                                       & \multicolumn{1}{l|}{3}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{14.83}                                                        & \multicolumn{1}{l|}{17.83}                                                       & 3                                \\ \hline
+			\multicolumn{1}{|c|}{23} & \multicolumn{1}{c|}{418}                                    & \multicolumn{1}{l|}{0.75}                                                        & \multicolumn{1}{l|}{13.5}                                                         & \multicolumn{1}{l|}{14.25}                                                       & \multicolumn{1}{l|}{5}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{14.33}                                                        & \multicolumn{1}{l|}{17.33}                                                       & 6                                \\ \hline
+			\multicolumn{1}{|c|}{24} & \multicolumn{1}{c|}{234}                                    & \multicolumn{1}{l|}{0.5}                                                         & \multicolumn{1}{l|}{13.75}                                                        & \multicolumn{1}{l|}{14.25}                                                       & \multicolumn{1}{l|}{2}          & \multicolumn{1}{l|}{1.5}                                                         & \multicolumn{1}{l|}{14.33}                                                        & \multicolumn{1}{l|}{15.83}                                                       & 12                               \\ \hline
+			\multicolumn{1}{|c|}{25} & \multicolumn{1}{c|}{764}                                    & \multicolumn{1}{l|}{1.25}                                                        & \multicolumn{1}{l|}{14.5}                                                         & \multicolumn{1}{l|}{15.75}                                                       & \multicolumn{1}{l|}{5}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{15.83}                                                        & \multicolumn{1}{l|}{18.83}                                                       & 11                               \\ \hline
+			\multicolumn{1}{|c|}{26} & \multicolumn{1}{c|}{225}                                    & \multicolumn{1}{l|}{0.5}                                                         & \multicolumn{1}{l|}{14.5}                                                         & \multicolumn{1}{l|}{15}                                                          & \multicolumn{1}{l|}{2}          & \multicolumn{1}{l|}{1.5}                                                         & \multicolumn{1}{l|}{15.08}                                                        & \multicolumn{1}{l|}{16.58}                                                       & 8                                \\ \hline
+			\multicolumn{1}{|c|}{27} & \multicolumn{1}{c|}{806}                                    & \multicolumn{1}{l|}{1.75}                                                        & \multicolumn{1}{l|}{15}                                                           & \multicolumn{1}{l|}{16.75}                                                       & \multicolumn{1}{l|}{4}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{16.83}                                                        & \multicolumn{1}{l|}{19.83}                                                       & 12                               \\ \hline
+			\multicolumn{1}{|c|}{28} & \multicolumn{1}{c|}{471}                                    & \multicolumn{1}{l|}{0.75}                                                        & \multicolumn{1}{l|}{15}                                                           & \multicolumn{1}{l|}{15.75}                                                       & \multicolumn{1}{l|}{1}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{15.83}                                                        & \multicolumn{1}{l|}{18.83}                                                       & 9                                \\ \hline
+			\multicolumn{1}{|c|}{29} & \multicolumn{1}{c|}{601}                                    & \multicolumn{1}{l|}{0.75}                                                        & \multicolumn{1}{l|}{15}                                                           & \multicolumn{1}{l|}{15.75}                                                       & \multicolumn{1}{l|}{3}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{15.83}                                                        & \multicolumn{1}{l|}{18.83}                                                       & 10                               \\ \hline
+			\multicolumn{1}{|c|}{30} & \multicolumn{1}{c|}{775}                                    & \multicolumn{1}{l|}{1.75}                                                        & \multicolumn{1}{l|}{15.25}                                                        & \multicolumn{1}{l|}{17}                                                          & \multicolumn{1}{l|}{2}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{17.08}                                                        & \multicolumn{1}{l|}{20.08}                                                       & 1                                \\ \hline
+			\multicolumn{1}{|c|}{31} & \multicolumn{1}{c|}{823}                                    & \multicolumn{1}{l|}{1.75}                                                        & \multicolumn{1}{l|}{16}                                                           & \multicolumn{1}{l|}{17.75}                                                       & \multicolumn{1}{l|}{5}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{17.83}                                                        & \multicolumn{1}{l|}{20.83}                                                       & 5                                \\ \hline
+			\multicolumn{1}{|c|}{32} & \multicolumn{1}{c|}{637}                                    & \multicolumn{1}{l|}{1.25}                                                        & \multicolumn{1}{l|}{16}                                                           & \multicolumn{1}{l|}{17.25}                                                       & \multicolumn{1}{l|}{1}          & \multicolumn{1}{l|}{3}                                                           & \multicolumn{1}{l|}{17.33}                                                        & \multicolumn{1}{l|}{20.33}                                                       & 4                                \\ \hline
+		\end{tabular}
+		\caption*{\textbf{Table ii} Hospital Simulation with 5 Operating Rooms}
+	\end{table}
+\end{center}
+
+
+\begin{figure}[H]
+	\centering{\includegraphics[width=15cm]{code1.png}}
+\end{figure}
+
+\begin{figure}[H]
+	\centering{\includegraphics[width=15cm]{code2.png}}
+\end{figure}
+
+\begin{figure}[H]
+	\centering{\includegraphics[width=15cm]{code3.png}}
+\end{figure}
+
+\begin{figure}[H]
+	\centering{\includegraphics[width=15cm]{code4.png}}
+		\caption*{\textbf{Figure i} MATLAB code for Hospital Monte Carlo Simulation}
+\end{figure}
+
+
+
+\end{document}
+
+
